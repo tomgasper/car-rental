@@ -32,12 +32,16 @@ sealed class ReservationService : IReservationService
         // Calculate the total cost
         var totalCost = _pricingService.CalculatePrice(car.CarModel, request.StartDate, request.EndDate);
 
+        if (totalCost.IsFailed) {
+            return Result.Fail<ReservationResponse>(totalCost.Errors);
+        }
+
         // Make reservation and persist it
         var reservation = new Reservation(
             car: car,
             startDate: request.StartDate,
             endDate: request.EndDate,
-            totalCost: totalCost,
+            totalCost: totalCost.Value,
             reservationStatus: ReservationStatus.Confirmed
         );
         _reservationRepository.AddReservation(reservation);
@@ -50,7 +54,7 @@ sealed class ReservationService : IReservationService
             StartDate: request.StartDate,
             EndDate: request.EndDate,
             CarId: request.CarId,
-            TotalCost: totalCost,
+            TotalCost: totalCost.Value,
             ReservationStatus: reservation.ReservationStatus.ToString()
         );
     }
