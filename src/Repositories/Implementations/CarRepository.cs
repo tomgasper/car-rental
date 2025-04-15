@@ -8,6 +8,11 @@ class CarRepository : ICarRepository
 {
     private readonly AppDbContext _dbContext;
 
+    public CarRepository(AppDbContext dbContext)
+    {
+        _dbContext = dbContext;
+    }
+
     public async Task<Car?> GetById(Guid carId)
     {
         return await _dbContext.Cars.FirstOrDefaultAsync( car => car.Id == carId);
