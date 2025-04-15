@@ -1,4 +1,5 @@
 using CarRental.src.DTOs.Reservation;
+using FluentResults;
 using Microsoft.AspNetCore.Mvc;
 
 [Route("api/reservations")]
@@ -13,7 +14,7 @@ sealed class ReservationController : ApiController {
     [HttpPost]
     public async Task<IActionResult> MakeReservation([FromBody] ReservationRequest request)
     {
-        ReservationResponse response = await _reservationService.ReserveCar(request);
+        Result<ReservationResponse> response = await _reservationService.ReserveCar(request);
 
         if (response.IsFailed)
         {

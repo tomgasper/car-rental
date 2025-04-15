@@ -5,5 +5,5 @@ public record ReservationResponse(
     DateTime StartDate,
     DateTime EndDate,
     Guid CarId,
-    decimal TotalCost,
+    double TotalCost,
     string ReservationStatus);

@@ -11,4 +11,9 @@ sealed class ReservationRepository : IReservationRepository
     {
         _dbContext = dbContext;
     }
+
+    public void AddReservation(Reservation reservation)
+    {
+        _dbContext.Reservations.Add(reservation);
+    }
 }
