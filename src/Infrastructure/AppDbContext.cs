@@ -6,6 +6,6 @@ public class AppDbContext : DbContext
 {
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) {}
 
-    DbSet<Car> Cars { get;set;}
-    DbSet<Reservation> Reservations { get;set; }
+    public DbSet<Car> Cars { get;set;}
+    public DbSet<Reservation> Reservations { get;set; }
 }
