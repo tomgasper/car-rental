@@ -1,7 +1,8 @@
 using CarRental.src.Models;
+using FluentResults;
 
 namespace CarRental.src.Services.Interfaces;
 interface IPricingService
 {
-    double CalculatePrice(CarModel carModel, DateTime startDate, DateTime endDate);
+    Result<double> CalculatePrice(CarModel carModel, DateTime startDate, DateTime endDate);
 }
