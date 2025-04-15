@@ -84,7 +84,7 @@ sealed class ReservationService : IReservationService
 
         if (availableCar is null)
         {
-            return Result.Fail<Car>(new NotFoundError($"No {carModel} were found for the provided dates."));
+            return Result.Fail<Car>(new NotFoundError($"No {carModel} was found for the provided dates."));
         }
 
         return availableCar;
