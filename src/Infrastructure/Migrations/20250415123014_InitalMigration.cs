@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace CarRental.Migrations
+namespace CarRental.src.Infrastructure.Migrations
 {
     /// <inheritdoc />
     public partial class InitalMigration : Migration
