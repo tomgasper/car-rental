@@ -8,4 +8,5 @@ public class AppDbContext : DbContext
 
     public DbSet<Car> Cars { get;set;}
     public DbSet<Reservation> Reservations { get;set; }
+    public DbSet<CarPricingRule> CarPricingRules { get;set; }
 }
