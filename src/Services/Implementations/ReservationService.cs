@@ -10,7 +10,7 @@ sealed class ReservationService : IReservationService
     private readonly IPricingService _pricingService;
     private readonly ICarRepository _carRepository;
     private readonly IReservationRepository _reservationRepository;
-    private readonly IUnitOfOwrk _unitOfWork;
+    private readonly IUnitOfWork _unitOfWork;
 
     public ReservationService(IPricingService pricingService, ICarRepository carRepository, IReservationRepository reservationRepository, IUnitOfWork unitOfWork)
     {
