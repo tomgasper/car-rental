@@ -5,4 +5,5 @@ namespace CarRental.src.Repositories.Interfaces;
 interface IReservationRepository
 {
     void AddReservation(Reservation reservation);
+    public Task<List<Reservation>> GetByModelAndDate(string carModel, DateTime startDate, DateTime endDate);
 }

@@ -24,14 +24,14 @@ sealed class ReservationService : IReservationService
 
     public async Task<Result<ReservationResponse>> ReserveCar(ReservationRequest request)
     {
-        Car? car = await _carRepository.GetById(request.CarId);
-        if (car is null)
-        {
-            return Result.Fail<ReservationResponse>(new NotFoundError($"The car with id: {request.CarId} couldn't be found"));
+        var availableCar = await GetFirstAvailableCar(request.CarModel, request.StartDate, request.EndDate);
+
+        if (availableCar.IsFailed){
+            return Result.Fail<ReservationResponse>(availableCar.Errors);
         }
 
         // Calculate the total cost
-        var totalCost = _pricingService.CalculatePrice(car.CarModel, request.StartDate, request.EndDate);
+        var totalCost = _pricingService.CalculatePrice(availableCar.Value.CarModel, request.StartDate, request.EndDate);
         if (totalCost.IsFailed) {
             return Result.Fail<ReservationResponse>(totalCost.Errors);
         }
@@ -45,7 +45,7 @@ sealed class ReservationService : IReservationService
         }
         
         var reservation = new Reservation(
-            car: car,
+            car: availableCar.Value,
             customerName: request.FirstName.Trim() + " " + request.LastName.Trim(),
             customerEmail: request.Email,
             startDate: request.StartDate,
@@ -71,5 +71,22 @@ sealed class ReservationService : IReservationService
             ReturnLocation: returnLocation.Name,
             ReservationStatus: reservation.ReservationStatus.ToString()
         );
+    }
+
+    private async Task<Result<Car>> GetFirstAvailableCar(string carModel, DateTime startDate, DateTime endDate)
+    {
+        // Filter out reserved cars
+        List<Car> cars = await _carRepository.GetByModel(carModel);
+        List<Reservation> reservations = await _reservationRepository.GetByModelAndDate(carModel, startDate, endDate);
+        HashSet<Guid> reservedCars = reservations.Select( reservation => reservation.Car.Id ).ToHashSet();
+
+        Car? availableCar = cars.FirstOrDefault( car => !reservedCars.Contains(car.Id));
+
+        if (availableCar is null)
+        {
+            return Result.Fail<Car>(new NotFoundError($"No {carModel} were found for the provided dates."));
+        }
+
+        return availableCar;
     }
 }

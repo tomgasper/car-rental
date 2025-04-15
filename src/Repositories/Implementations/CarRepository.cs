@@ -18,8 +18,8 @@ class CarRepository : ICarRepository
         return await _dbContext.Cars.FirstOrDefaultAsync( car => car.Id == carId);
     }
 
-    public async Task<List<Car>> GetByModel(CarModel carModel)
+    public async Task<List<Car>> GetByModel(string carModel)
     {
-        return await _dbContext.Cars.Where( car => car.CarModel == carModel).ToListAsync();
+        return await _dbContext.Cars.Where( car => car.CarModel.ToString() == carModel).ToListAsync();
     }
 }

@@ -16,4 +16,14 @@ sealed class ReservationRepository : IReservationRepository
     {
         _dbContext.Reservations.Add(reservation);
     }
+
+    public async Task<List<Reservation>> GetByModelAndDate(string carModel, DateTime startDate, DateTime endDate)
+    {
+        return await _dbContext.Reservations.Include(reservation => reservation.Car).Where(
+            reservation => reservation.Car.CarModel.ToString() == carModel &&
+            (reservation.ReservationStatus == ReservationStatus.Confirmed || reservation.ReservationStatus == ReservationStatus.Planned) &&
+            ((startDate >= reservation.StartDate && startDate <= reservation.EndDate) ||
+            (endDate >= reservation.StartDate && endDate <= reservation.EndDate))
+        ).ToListAsync();
+    }
 }

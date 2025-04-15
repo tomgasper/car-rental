@@ -5,7 +5,7 @@ record ReservationRequest(
     string Email,
     DateTime StartDate,
     DateTime EndDate,
-    Guid CarId,
+    string CarModel,
     string PickupLocation,
     string ReturnLocation
 );
