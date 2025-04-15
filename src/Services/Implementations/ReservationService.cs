@@ -42,7 +42,7 @@ sealed class ReservationService : IReservationService
         );
         _reservationRepository.AddReservation(reservation);
 
-        await _unitOfWork.SaveChangesAsync();
+        await _unitOfWork.SaveChangesAsync(CancellationToken.None);
 
         return new ReservationResponse(
             ReservationId: reservation.Id,
