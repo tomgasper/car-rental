@@ -1,5 +1,5 @@
 namespace CarRental.src.DTOs.Reservation;
-public record ReservationResponseDTO(
+public record ReservationResponse(
     Guid ReservationId,
     string CustomerName,
     DateTime StartDate,

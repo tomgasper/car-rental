@@ -1,7 +1,7 @@
-using CarRental.src.Models;
+using CarRental.src.DTOs.Reservation;
 
 namespace CarRental.src.Services.Interfaces;
-public interface IReservationService
+interface IReservationService
 {
-    void ReserveCar(CarModel carModel, DateTime startDate, DateTime endDate);
+    void ReserveCar(ReservationRequest reservationRequest);
 }

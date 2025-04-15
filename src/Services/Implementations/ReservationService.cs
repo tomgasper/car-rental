@@ -1,10 +1,20 @@
+using CarRental.src.DTOs.Reservation;
 using CarRental.src.Models;
 using CarRental.src.Services.Interfaces;
 
 sealed class ReservationService : IReservationService
 {
-    public void ReserveCar(CarModel carModel, DateTime startDate, DateTime endDate)
+    private readonly IPricingService _pricingService;
+
+    public ReservationService(IPricingService pricingService)
     {
-        throw new NotImplementedException();
+        _pricingService = pricingService;
+    }
+
+    public void ReserveCar(ReservationRequest request)
+    {
+        // Check availability for the dates
+        // Get all cars that match the request
+        // Check which are free
     }
 }
