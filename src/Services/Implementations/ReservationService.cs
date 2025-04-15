@@ -1,6 +1,7 @@
 using CarRental.src.DTOs.Reservation;
 using CarRental.src.Models;
 using CarRental.src.Services.Interfaces;
+using FluentResults;
 
 sealed class ReservationService : IReservationService
 {
@@ -13,10 +14,11 @@ sealed class ReservationService : IReservationService
         _carRepository = carRepository;
     }
 
-    public void ReserveCar(ReservationRequest request)
+    public async Result<ReservationResponse> ReserveCar(ReservationRequest request)
     {
         // Check availability for the dates
         // Get all cars that match the request
         // Check which are free
+        List<Car> cars = await _carRepository.GetById(request.CarId);
     }
 }
