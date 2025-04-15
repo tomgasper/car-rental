@@ -4,5 +4,5 @@ using FluentResults;
 namespace CarRental.src.Services.Interfaces;
 interface IReservationService
 {
-    Result<ReservationResponse> ReserveCar(ReservationRequest reservationRequest);
+    Task<Result<ReservationResponse>> ReserveCar(ReservationRequest reservationRequest);
 }
