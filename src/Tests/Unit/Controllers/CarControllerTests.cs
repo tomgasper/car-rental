@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Xunit;
 
-namespace CarRental.Tests.Unit.Controllers;
+namespace CarRental.src.Tests.Unit.Controllers;
 
 public class CarControllerTests
 {
