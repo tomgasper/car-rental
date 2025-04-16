@@ -7,14 +7,14 @@ import { CarSelection } from "./CarSelection"
 import { DateSelector } from "./DateSelector"
 import { LocationSelector } from "./LocationSelector"
 
-interface Step1Props {
+interface InitialReservationFormProps {
   formData: ReservationFormData
   onInputChange: (field: keyof ReservationFormData, value: any) => void
   onCheckAvailability: () => void
   isLoading: boolean
 }
 
-export function Step1InitialForm({ formData, onInputChange, onCheckAvailability, isLoading }: Step1Props) {
+export function InitialReservationForm({ formData, onInputChange, onCheckAvailability, isLoading }: InitialReservationFormProps) {
   return (
     <Card>
       <CardHeader>

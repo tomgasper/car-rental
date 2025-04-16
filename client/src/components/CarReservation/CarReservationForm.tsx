@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react"
 import type { ReservationFormData } from "@/lib/types"
-import { Step1InitialForm } from "./ReservationSteps/InitialReservationForm"
+import { InitialReservationForm } from "./ReservationSteps/InitialReservationForm/InitialReservationForm"
+import { Confirmation } from "./ReservationSteps/Confirmation/Confirmation"
 
-// Form steps
+// form steps
 const STEPS = {
     RESERVATION_FORM: 0,
     AVAILABILITY_CONFIRMATION: 1,
@@ -10,7 +11,7 @@ const STEPS = {
   }
 
 export default function ReservationForm() {
-  // Get step from URL query parameter or default to initial step
+  // get step from URL query parameter or default to initial step
   const getStepFromUrl = (): number => {
     const searchParams = new URLSearchParams(window.location.search)
     const stepParam = searchParams.get("step")
@@ -38,7 +39,7 @@ export default function ReservationForm() {
   const [reservationId, setReservationId] = useState("")
   const [isLoading, setIsLoading] = useState(false)
 
-  // Update URL when step changes
+  // update URL when step changes
   const updateStep = (newStep: number) => {
     const searchParams = new URLSearchParams(window.location.search)
 
@@ -50,7 +51,7 @@ export default function ReservationForm() {
     setStep(newStep)
   }
 
-  // Listen for popstate events (browser back/forward buttons)
+  // listen for popstate events (browser back/forward buttons)
   useEffect(() => {
     const handlePopState = () => {
       setStep(getStepFromUrl())
@@ -98,14 +99,35 @@ export default function ReservationForm() {
     updateStep(STEPS.RESERVATION_FORM)
   }
 
-  // Render the appropriate step
+  const handleConfirmReservation = () => {
+    setIsLoading(true)
+    // simulate API call for now
+    setTimeout(() => {
+      const id = "1234567890"
+      setReservationId(id)
+      setIsLoading(false)
+      updateStep(STEPS.RESERVATION_COMPLETE)
+    }, 1500)
+  }
+
+  // render the appropriate step
   switch (step) {
     case STEPS.RESERVATION_FORM:
       return (
-        <Step1InitialForm
+        <InitialReservationForm
           formData={formData}
           onInputChange={handleInputChange}
           onCheckAvailability={handleCheckAvailability}
+          isLoading={isLoading}
+        />
+      )
+      case STEPS.AVAILABILITY_CONFIRMATION:
+      return (
+        <Confirmation
+          formData={formData}
+          onInputChange={handleInputChange}
+          onBack={handleBack}
+          onConfirm={handleConfirmReservation}
           isLoading={isLoading}
         />
       )
