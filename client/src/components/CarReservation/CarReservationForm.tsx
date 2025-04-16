@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react"
 import type { ReservationFormData } from "@/lib/types"
+import { Step1InitialForm } from "./ReservationSteps/InitialReservationForm"
 
 // Form steps
-export const STEPS = {
+const STEPS = {
     RESERVATION_FORM: 0,
     AVAILABILITY_CONFIRMATION: 1,
     RESERVATION_COMPLETE: 2,
@@ -100,6 +101,14 @@ export default function ReservationForm() {
   // Render the appropriate step
   switch (step) {
     case STEPS.RESERVATION_FORM:
+      return (
+        <Step1InitialForm
+          formData={formData}
+          onInputChange={handleInputChange}
+          onCheckAvailability={handleCheckAvailability}
+          isLoading={isLoading}
+        />
+      )
     default:
       return null
   }
