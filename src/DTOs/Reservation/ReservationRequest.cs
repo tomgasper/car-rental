@@ -1,5 +1,5 @@
 namespace CarRental.src.DTOs.Reservation;
-record ReservationRequest(
+public record ReservationRequest(
     string FirstName,
     string LastName,
     string Email,

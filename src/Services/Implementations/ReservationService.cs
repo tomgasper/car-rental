@@ -5,7 +5,7 @@ using CarRental.src.Repositories.Interfaces;
 using CarRental.src.Services.Interfaces;
 using FluentResults;
 
-sealed class ReservationService : IReservationService
+public sealed class ReservationService : IReservationService
 {
     private readonly IPricingService _pricingService;
     private readonly ICarRepository _carRepository;

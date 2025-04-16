@@ -3,7 +3,7 @@ using FluentResults;
 using Microsoft.AspNetCore.Mvc;
 
 [Route("api/reservations")]
-sealed class ReservationController : ApiController {
+public sealed class ReservationController : ApiController {
     private readonly ReservationService _reservationService;
 
     public ReservationController(ReservationService reservationService)
