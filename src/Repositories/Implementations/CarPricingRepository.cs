@@ -1,8 +1,11 @@
 using CarRental.src.Infrastructure;
 using CarRental.src.Models;
+using CarRental.src.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-class CarPricingRepository : ICarPricingRuleRepository
+namespace CarRental.src.Repositories.Implementations;
+
+public class CarPricingRepository : ICarPricingRuleRepository
 {
     private readonly AppDbContext _dbContext;
 

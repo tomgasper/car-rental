@@ -23,7 +23,7 @@ sealed class CarService : ICarService
         _carPricingRepository = carPricingRepository;
     }
 
-    public async Task<Result<List<CarAvailabilityResponse>>> GetAvailableCars(string? carModel, DateTime startDate, DateTime endDate)
+    public async Task<Result<List<CarAvailabilityResponse>>> GetAvailableCars(string carModel, DateTime startDate, DateTime endDate)
     {
         if (startDate > endDate)
         {

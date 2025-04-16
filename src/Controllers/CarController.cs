@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using CarRental.src.DTOs.Car;
 using CarRental.src.Services.Interfaces;
 using FluentResults;
@@ -15,9 +16,9 @@ public sealed class CarController : ApiController
 
     [HttpGet]
     public async Task<IActionResult> GetCars(
-        [FromQuery] DateTime startDate,
-        [FromQuery] DateTime endDate,
-        [FromQuery] string? carModel = null)
+        [FromQuery][Required] DateTime startDate,
+        [FromQuery][Required] DateTime endDate,
+        [FromQuery][Required] string carModel)
     {
         Result<List<CarAvailabilityResponse>> result = await _carService.GetAvailableCars(carModel, startDate, endDate);
 

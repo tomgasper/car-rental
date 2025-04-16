@@ -20,6 +20,11 @@ class CarRepository : ICarRepository
 
     public async Task<List<Car>> GetByModel(string carModel)
     {
-        return await _dbContext.Cars.Where( car => car.CarModel.ToString() == carModel).ToListAsync();
+        if (Enum.TryParse<CarModel>(carModel, out CarModel parsedModel))
+        {
+            return await _dbContext.Cars.Where(car => car.CarModel == parsedModel).ToListAsync();
+        }
+        
+        return new List<Car>();
     }
 }

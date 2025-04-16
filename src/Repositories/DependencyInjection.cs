@@ -6,6 +6,7 @@ public static class RepositoryDependencyInjection {
         services.AddScoped<ICarRepository, CarRepository>();
         services.AddScoped<IReservationRepository, ReservationRepository>();
         services.AddScoped<ILocationRepository, LocationRepository>();
+        services.AddScoped<ICarPricingRuleRepository, CarPricingRepository>();
 
         return services;
     }
