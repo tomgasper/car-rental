@@ -51,3 +51,6 @@ app.Lifetime.ApplicationStarted.Register(async () =>
 });
 
 app.Run();
+
+// Needed for integration tests
+public partial class Program { }
