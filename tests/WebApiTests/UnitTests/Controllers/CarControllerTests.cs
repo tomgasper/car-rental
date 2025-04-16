@@ -1,6 +1,7 @@
 using CarRental.src.DTOs.Car;
 using CarRental.src.Services.Interfaces;
 using FluentResults;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 
@@ -14,7 +15,13 @@ public class CarControllerTests
     public CarControllerTests()
     {
         _carServiceMock = new Mock<ICarService>();
-        _controller = new CarController(_carServiceMock.Object);
+        _controller = new CarController(_carServiceMock.Object)
+        {
+        ControllerContext = new ControllerContext()
+        {
+            HttpContext = new DefaultHttpContext()
+        }
+    };
     }
 
     [Fact]
@@ -42,7 +49,7 @@ public class CarControllerTests
         var result = await _controller.GetCars(startDate, endDate, carModel);
 
         // Assert
-        var okResult = Assert.IsType<OkObjectResult>(result);  // Instead of Assert.IsNotNull
+        var okResult = Assert.IsType<OkObjectResult>(result);
         Assert.Equal(200, okResult.StatusCode);
         
         var returnedCars = Assert.IsType<List<CarAvailabilityResponse>>(okResult.Value);
@@ -65,9 +72,10 @@ public class CarControllerTests
         var result = await _controller.GetCars(startDate, endDate, carModel);
 
         // Assert
-        var problemResult = Assert.IsType<ObjectResult>(result);
-        Assert.Equal(400, problemResult.StatusCode);
+        var objectResult = Assert.IsType<ObjectResult>(result);
+        var validationProblemDetails = Assert.IsType<ValidationProblemDetails>(objectResult.Value);
     }
+
 
     [Fact]
     public async Task GetCars_WithNonExistentModel_ReturnsNotFound()
@@ -85,7 +93,8 @@ public class CarControllerTests
         var result = await _controller.GetCars(startDate, endDate, carModel);
 
         // Assert
-        var problemResult = Assert.IsType<ObjectResult>(result);
-        Assert.Equal(404, problemResult.StatusCode);
+        var objectResult = Assert.IsType<ObjectResult>(result);
+        var problemDetails = Assert.IsType<ProblemDetails>(objectResult.Value);
+        Assert.Equal(404, problemDetails.Status);
     }
 }

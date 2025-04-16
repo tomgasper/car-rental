@@ -1,6 +1,7 @@
 using CarRental.src.DTOs.Reservation;
 using CarRental.src.Services.Interfaces;
 using FluentResults;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 
@@ -14,7 +15,12 @@ public class ReservationControllerTests
     public ReservationControllerTests()
     {
         _reservationServiceMock = new Mock<IReservationService>();
-        _controller = new ReservationController(_reservationServiceMock.Object);
+        _controller = new ReservationController(_reservationServiceMock.Object) {
+        ControllerContext = new ControllerContext()
+        {
+            HttpContext = new DefaultHttpContext()
+        }
+    };
     }
 
     [Fact]
@@ -83,8 +89,9 @@ public class ReservationControllerTests
         var result = await _controller.MakeReservation(request);
 
         // Assert
-        var problemResult = Assert.IsType<ObjectResult>(result);
-        Assert.Equal(404, problemResult.StatusCode);
+        var objectResult = Assert.IsType<ObjectResult>(result);
+        var problemDetails = Assert.IsType<ProblemDetails>(objectResult.Value);
+        Assert.Equal(404, problemDetails.Status);
     }
 
     [Fact]
@@ -110,7 +117,7 @@ public class ReservationControllerTests
         var result = await _controller.MakeReservation(request);
 
         // Assert
-        var problemResult = Assert.IsType<ObjectResult>(result);
-        Assert.Equal(400, problemResult.StatusCode);
+        var objectResult = Assert.IsType<ObjectResult>(result);
+        var validationProblemDetails = Assert.IsType<ValidationProblemDetails>(objectResult.Value);
     }
 }
