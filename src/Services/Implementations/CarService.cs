@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CarRental.src.Services.Implementations;
 
-sealed class CarService : ICarService
+public sealed class CarService : ICarService
 {
     private readonly ICarRepository _carRepository;
     private readonly IReservationRepository _reservationRepository;
