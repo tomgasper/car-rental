@@ -1,12 +1,13 @@
 using CarRental.src.DTOs.Reservation;
+using CarRental.src.Services.Interfaces;
 using FluentResults;
 using Microsoft.AspNetCore.Mvc;
 
 [Route("api/reservations")]
 public sealed class ReservationController : ApiController {
-    private readonly ReservationService _reservationService;
+    private readonly IReservationService _reservationService;
 
-    public ReservationController(ReservationService reservationService)
+    public ReservationController(IReservationService reservationService)
     {
         _reservationService = reservationService;
     }
