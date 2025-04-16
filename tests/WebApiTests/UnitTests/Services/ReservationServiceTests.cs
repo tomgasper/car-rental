@@ -229,4 +229,120 @@ public class ReservationServiceTests
         Assert.True(result.IsFailed);
         Assert.Contains(result.Errors, error => error.Message.Contains("Pricing calculation failed"));
     }
+
+    [Fact]
+    public async Task ReserveCar_WithSameDayReservation_ReturnsOk()
+    {
+        // Arrange
+        var request = new ReservationRequest(
+            FirstName: "John",
+            LastName: "Doe",
+            Email: "john.doe@example.com",
+            StartDate: DateTime.Now.AddDays(1),
+            EndDate: DateTime.Now.AddDays(1),
+            CarModel: "Model3",
+            PickupLocation: "PAP",
+            ReturnLocation: "PAP"
+        );
+
+        var pickupReturnLocation = new Location("PAP", "Palma Airport", "Airport address");
+
+        var car = new Car
+        {
+            Id = Guid.NewGuid(),
+            RegistrationNumber = "1234TM3",
+            CarModel = CarModel.Model3
+        };
+
+        _carRepositoryMock
+            .Setup(x => x.GetByModel(request.CarModel))
+            .ReturnsAsync(new List<Car> { car });
+
+        _reservationRepositoryMock
+            .Setup(x => x.GetByModelAndDate(request.CarModel, request.StartDate, request.EndDate))
+            .ReturnsAsync(new List<Reservation>());
+
+        _pricingServiceMock
+        .Setup(x => x.CalculatePrice(CarModel.Model3, request.StartDate, request.EndDate))
+        .Returns(Result.Ok(100.0));
+
+        _locationRepositoryMock
+            .Setup(x => x.GetByCode("PAP"))
+            .ReturnsAsync(pickupReturnLocation);
+
+        // Act
+        var result = await _service.ReserveCar(request);
+
+        // Assert
+        Assert.True(result.IsSuccess);
+        Assert.Equal("John Doe", result.Value.CustomerName);
+        Assert.Equal(car.Id, result.Value.CarId);
+        Assert.Equal(100.0, result.Value.TotalCost);
+        Assert.Equal("Palma Airport", result.Value.PickupLocation);
+        Assert.Equal("Confirmed", result.Value.ReservationStatus);
+
+        _reservationRepositoryMock.Verify(x => x.AddReservation(It.IsAny<Reservation>()), Times.Once);
+        _unitOfWorkMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
+    }
+
+    [Fact]
+    public async Task ReserveCar_WithOverlappingReturnDate_ReturnsFailure()
+    {
+        // Arrange
+        var existingStartDate = DateTime.Now.AddDays(1);
+        var existingEndDate = DateTime.Now.AddDays(3);
+        var newStartDate = existingEndDate;
+        var newEndDate = DateTime.Now.AddDays(5);
+
+        var pickupReturnLocation = new Location("PAP", "Palma Airport", "Airport address");
+
+        var request = new ReservationRequest(
+            FirstName: "John",
+            LastName: "Doe",
+            Email: "john.doe@example.com",
+            StartDate: newStartDate,
+            EndDate: newEndDate,
+            CarModel: "Model3",
+            PickupLocation: "PAP",
+            ReturnLocation: "PAP"
+        );
+
+        var car = new Car
+        {
+            Id = Guid.NewGuid(),
+            RegistrationNumber = "1234TM3",
+            CarModel = CarModel.Model3
+        };
+
+        var existingReservation = new Reservation(
+            car: car,
+            customerName: "Existing Customer",
+            customerEmail: "existing@example.com",
+            startDate: existingStartDate,
+            endDate: existingEndDate,
+            totalCost: 300.0,
+            pickupLocation: pickupReturnLocation,
+            returnLocation: pickupReturnLocation,
+            reservationStatus: ReservationStatus.Confirmed
+        );
+
+        _carRepositoryMock
+            .Setup(x => x.GetByModel(request.CarModel))
+            .ReturnsAsync(new List<Car> { car });
+
+        _reservationRepositoryMock
+            .Setup(x => x.GetByModelAndDate(request.CarModel, request.StartDate, request.EndDate))
+            .ReturnsAsync(new List<Reservation> { existingReservation });
+        
+        _locationRepositoryMock
+            .Setup(x => x.GetByCode("PAP"))
+            .ReturnsAsync(pickupReturnLocation);
+
+        // Act
+        var result = await _service.ReserveCar(request);
+
+        // Assert
+        Assert.True(result.IsFailed);
+        Assert.Contains(result.Errors, error => error.Message.Contains("No Model3 was found for the provided dates."));
+    }
 } 
