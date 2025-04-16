@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import type { ReservationFormData } from "@/lib/types"
 import { InitialReservationForm } from "./ReservationSteps/InitialReservationForm/InitialReservationForm"
 import { Confirmation } from "./ReservationSteps/Confirmation/Confirmation"
+import { Complete } from "./ReservationSteps/Complete/Complete"
 
 // form steps
 const STEPS = {
@@ -131,6 +132,8 @@ export default function ReservationForm() {
           isLoading={isLoading}
         />
       )
+      case STEPS.RESERVATION_COMPLETE:
+      return <Complete formData={formData} reservationId={reservationId} onReset={handleReset} />
     default:
       return null
   }
