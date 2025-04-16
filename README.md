@@ -41,28 +41,19 @@ A .NET Core Web API service with React frontend for managing Tesla car rentals i
 src/
 
 ├── Controllers/ # API endpoints
-
 ├── Services/ # Business logic
-
 ├── Repositories/ # Data access layer
-
 ├── Models/ # Domain entities
-
 ├── DTOs/ # Data transfer objects
-
 ├── Infrastructure/ # Database and configuration
-
 └── Common/ # Shared utilities and error handling
 
   
 
 client/
 
-└── src/
-
-├── components/ # React components
-
-└── services/ # API integration
+├──  src/
+└── components/ # React components
 
 ```
 
