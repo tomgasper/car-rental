@@ -5,8 +5,8 @@ using Microsoft.EntityFrameworkCore;
 public static class InfrastructureDependencyInjection {
     public static void AddInfrastructure(this IServiceCollection services, ConfigurationManager configuration)
     {
-        services.AddUnitOfWork();
         services.AddDbContext(configuration);
+        services.AddUnitOfWork();
     }
 
     public static IServiceCollection AddUnitOfWork(this IServiceCollection services) {

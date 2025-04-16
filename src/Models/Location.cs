@@ -14,7 +14,7 @@ public class Location
         string address
     )
     {
-        Id = new Guid();
+        Id = Guid.NewGuid();
         LocationCode = locationCode;
         Name = name;
         Address = address;

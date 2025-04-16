@@ -1,11 +1,12 @@
+using CarRental.src.Infrastructure;
 using CarRental.src.Infrastructure.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 
 class UnitOfWork : IUnitOfWork
 {
-    private readonly DbContext _dbContext;
+    private readonly AppDbContext _dbContext;
 
-    public UnitOfWork(DbContext dbContext)
+    public UnitOfWork(AppDbContext dbContext)
     {
         _dbContext = dbContext;
     }

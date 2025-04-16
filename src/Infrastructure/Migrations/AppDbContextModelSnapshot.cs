@@ -44,7 +44,7 @@ namespace CarRental.src.Infrastructure.Migrations
 
                     b.HasIndex("LocationId");
 
-                    b.ToTable("Cars");
+                    b.ToTable("Cars", (string)null);
                 });
 
             modelBuilder.Entity("CarRental.src.Models.Location", b =>
@@ -62,7 +62,7 @@ namespace CarRental.src.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Location");
+                    b.ToTable("Location", (string)null);
                 });
 
             modelBuilder.Entity("CarRental.src.Models.Reservation", b =>
@@ -90,7 +90,7 @@ namespace CarRental.src.Infrastructure.Migrations
 
                     b.HasIndex("CarId");
 
-                    b.ToTable("Reservations");
+                    b.ToTable("Reservations", (string)null);
                 });
 
             modelBuilder.Entity("CarRental.src.Models.Car", b =>
