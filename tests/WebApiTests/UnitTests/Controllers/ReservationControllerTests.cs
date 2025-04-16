@@ -3,9 +3,8 @@ using CarRental.src.Services.Interfaces;
 using FluentResults;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using Xunit;
 
-namespace CarRental.src.Tests.Unit.Controllers;
+namespace WebApiTests.UnitTests.Controllers;
 
 public class ReservationControllerTests
 {
