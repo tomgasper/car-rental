@@ -8,6 +8,7 @@ public static class ServiceDependencyInjection {
         services.AddScoped<ICarService, CarService>();
         services.AddScoped<IReservationService, ReservationService>();
         services.AddScoped<IPricingService, PricingService>();
+        services.AddScoped<ILocationService, LocationService>();
         services.AddScoped<IValidator<ReservationRequest>, ReservationRequestValidator>();
         return services;
     }
