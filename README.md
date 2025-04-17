@@ -104,7 +104,7 @@ npm run dev
 
 ## Testing
 
-The project includes integration tests using xUnit. Run tests via:
+The WebApi project includes unit tests and integration tests using xUnit. Run tests via:
 
 ```bash
 # With Docker
