@@ -51,11 +51,11 @@ export default function ReservationForm() {
   }, [])
 
   return (
-    <div className="space-y-4">
+    <div className="flex flex-col justify-center items-center container-sm mx-auto max-w-3xl py-8 gap-2">
       {error && (
-        <Alert variant="destructive">
-          <AlertCircle className="h-4 w-4" />
-          <AlertDescription>{error}</AlertDescription>
+        <Alert variant="destructive" className="break-words px-2">
+          <AlertCircle className="h-4 w-4 shrink-0" />
+          <AlertDescription className="w-full">{error}</AlertDescription>
         </Alert>
       )}
 

@@ -1,4 +1,8 @@
 function getErrorMessages(errors: any) {
+    if (typeof errors === 'string') {
+        return errors;
+    }
+    
     if (errors == null) {
         return "Unknown error occurred";
     }

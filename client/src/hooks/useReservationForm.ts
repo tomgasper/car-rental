@@ -41,7 +41,7 @@ export function useReservationForm(): UseReservationFormReturn {
     firstName: "",
     lastName: "",
     email: "",
-    phone: "",
+    phoneNumber: "",
   })
   const [reservationId, setReservationId] = useState("")
   const [isLoading, setIsLoading] = useState(false)
@@ -117,7 +117,7 @@ export function useReservationForm(): UseReservationFormReturn {
       firstName: "",
       lastName: "",
       email: "",
-      phone: "",
+      phoneNumber: "",
     })
     updateStep(STEPS.RESERVATION_FORM)
   }

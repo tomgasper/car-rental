@@ -44,8 +44,8 @@ export function PersonalInfoForm({ formData, onChange }: PersonalInfoFormProps) 
           <Label htmlFor="phone">Phone</Label>
           <Input
             id="phone"
-            value={formData.phone}
-            onChange={(e) => onChange("phone", e.target.value)}
+            value={formData.phoneNumber}
+            onChange={(e) => onChange("phoneNumber", e.target.value)}
             placeholder="Enter your phone number"
           />
         </div>

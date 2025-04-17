@@ -20,7 +20,7 @@ export interface Location {
     firstName: string
     lastName: string
     email: string
-    phone: string
+    phoneNumber: string
   }
   
   export interface ReservationSummary {

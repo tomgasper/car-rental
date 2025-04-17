@@ -22,8 +22,10 @@ export class ReservationService {
 
     const data = await response.json()
     if (!response.ok) {
-      const error = new ApiError("Failed to fetch car availability", data.errors, response.status);
-      throw error;
+        if (data.errors == null) {
+            throw new ApiError("Failed to fetch car availability", data.title);
+        }
+      throw new ApiError("Failed to fetch car availability", data.errors, response.status);
     }
 
     return data
@@ -40,7 +42,7 @@ export class ReservationService {
 
     const data = await response.json()
     if (!response.ok) {
-      throw new Error(data.errors?.[0] || "Failed to create reservation")
+        throw new ApiError("Failed to create reservation", data.errors, response.status);
     }
 
     return data
