@@ -15,12 +15,15 @@ public static class DatabaseSeeder
         await context.Database.EnsureCreatedAsync();
 
         // Check if we need to seed
-        if (!context.Locations.Any() && !context.CarPricingRules.Any() && !context.Cars.Any() && !context.Reservations.Any())
+        if (!context.Locations.Any() && !context.CarPricingRules.Any() && !context.Cars.Any() && !context.CarModels.Any() && !context.Reservations.Any())
         {
             await context.Locations.AddRangeAsync(InitialData.Locations);
             await context.SaveChangesAsync();
 
             await context.CarPricingRules.AddRangeAsync(InitialData.PricingRules);
+            await context.SaveChangesAsync();
+
+            await context.CarModels.AddRangeAsync(InitialData.CarModels);
             await context.SaveChangesAsync();
 
             await context.Cars.AddRangeAsync(InitialData.Cars);

@@ -3,7 +3,6 @@ public class Car
 {
     public Guid Id { get;set; }
     public string RegistrationNumber { get; set; }
-    public CarModel CarModel { get;set; }
-    public Guid LocationId { get; set; }
-    public Location Location { get; set; }
+    public Guid CarModelId { get; set; }
+    public CarModel CarModel { get; set; }
 }

@@ -4,6 +4,7 @@ using CarRental.src.Repositories.Interfaces;
 using Moq;
 using CarRental.src.Services.Implementations;
 using CarRental.src.Services.Interfaces;
+using WebApiTests.TestData;
 
 namespace WebApiTests.UnitTests.Services;
 
@@ -32,7 +33,7 @@ public class CarServiceTests
         // Arrange
         var startDate = DateTime.Now.AddDays(3);
         var endDate = DateTime.Now.AddDays(1);
-        var carModel = "Model3";
+        var carModel = "TESLA_MODEL_3";
 
         // Act
         var result = await _carService.GetAvailableCars(carModel, startDate, endDate);
@@ -49,7 +50,7 @@ public class CarServiceTests
         // Arrange
         var startDate = DateTime.Now.AddDays(1);
         var endDate = DateTime.Now.AddDays(3);
-        var carModel = "Model3";
+        var carModel = "TESLA_MODEL_3";
 
         _carRepositoryMock
             .Setup(x => x.GetByModel(carModel))
@@ -73,7 +74,7 @@ public class CarServiceTests
         // Arrange
         var startDate = DateTime.Now.AddDays(1);
         var endDate = DateTime.Now.AddDays(3);
-        var carModel = "Model3";
+        var carModel = "TESLA_MODEL_3";
         var carId = Guid.NewGuid();
 
         var cars = new List<Car>
@@ -82,13 +83,15 @@ public class CarServiceTests
             { 
                 Id = carId,
                 RegistrationNumber = "1234TM3",
-                CarModel = CarModel.Model3
+                CarModel = TestCarModels.Model3,
+                CarModelId = TestCarModels.Model3.Id
             }
         };
 
         var pricing = new CarPricingRule
         {
-            CarModel = CarModel.Model3,
+            CarModel = TestCarModels.Model3,
+            CarModelId = TestCarModels.Model3.Id,
             DailyRate = 100.0
         };
 
@@ -101,7 +104,7 @@ public class CarServiceTests
             .ReturnsAsync(new List<Reservation>());
 
         _carPricingRepositoryMock
-            .Setup(x => x.GetByModel(CarModel.Model3))
+            .Setup(x => x.GetByModel(TestCarModels.Model3))
             .ReturnsAsync(pricing);
 
         // Act
@@ -113,6 +116,7 @@ public class CarServiceTests
         Assert.Single(availableCars);
         Assert.Equal(carId, availableCars[0].Id);
         Assert.Equal("1234TM3", availableCars[0].RegistrationNumber);
+        Assert.Equal("TESLA_MODEL_3", availableCars[0].CarModel);
         Assert.Equal(200.0, availableCars[0].TotalPrice, precision: 2);
     }
 
@@ -122,7 +126,7 @@ public class CarServiceTests
         // Arrange
         var startDate = DateTime.Now.AddDays(1);
         var endDate = DateTime.Now.AddDays(3);
-        var carModel = "Model3";
+        var carModel = "TESLA_MODEL_3";
         var availableCarId = Guid.NewGuid();
         var reservedCarId = Guid.NewGuid();
 
@@ -132,13 +136,15 @@ public class CarServiceTests
             { 
                 Id = availableCarId,
                 RegistrationNumber = "1234TM3",
-                CarModel = CarModel.Model3
+                CarModel = TestCarModels.Model3,
+                CarModelId = TestCarModels.Model3.Id
             },
             new() 
             { 
                 Id = reservedCarId,
                 RegistrationNumber = "5678TM3",
-                CarModel = CarModel.Model3
+                CarModel = TestCarModels.Model3,
+                CarModelId = TestCarModels.Model3.Id
             }
         };
 
@@ -159,7 +165,8 @@ public class CarServiceTests
 
         var pricing = new CarPricingRule
         {
-            CarModel = CarModel.Model3,
+            CarModel = TestCarModels.Model3,
+            CarModelId = TestCarModels.Model3.Id,
             DailyRate = 100.0
         };
 
@@ -172,7 +179,7 @@ public class CarServiceTests
             .ReturnsAsync(reservations);
 
         _carPricingRepositoryMock
-            .Setup(x => x.GetByModel(CarModel.Model3))
+            .Setup(x => x.GetByModel(TestCarModels.Model3))
             .ReturnsAsync(pricing);
 
         // Act

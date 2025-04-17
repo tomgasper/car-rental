@@ -22,7 +22,7 @@ public class CarControllerIntegrationTests : IClassFixture<TestWebApplicationFac
         // Arrange
         var startDate = DateTime.Now.AddDays(1);
         var endDate = DateTime.Now.AddDays(3);
-        var carModel = "Model3";
+        var carModel = "TESLA_MODEL_3";
 
         // Act
         var response = await _client.GetAsync(
@@ -37,7 +37,7 @@ public class CarControllerIntegrationTests : IClassFixture<TestWebApplicationFac
         
         // Verify car properties based on seeded data
         var firstCar = cars[0];
-        Assert.Equal("Model3", firstCar.CarModel);
+        Assert.Equal("TESLA_MODEL_3", firstCar.CarModel);
         Assert.NotEqual(Guid.Empty, firstCar.Id);
         Assert.NotEmpty(firstCar.RegistrationNumber);
         Assert.True(firstCar.TotalPrice > 0);
@@ -49,7 +49,7 @@ public class CarControllerIntegrationTests : IClassFixture<TestWebApplicationFac
         // Arrange
         var startDate = DateTime.Now.AddDays(3);
         var endDate = DateTime.Now.AddDays(1);
-        var carModel = "Model3";
+        var carModel = "TESLA_MODEL_3";
 
         // Act
         var response = await _client.GetAsync(
@@ -65,7 +65,7 @@ public class CarControllerIntegrationTests : IClassFixture<TestWebApplicationFac
         // Arrange
         var startDate = DateTime.Now.AddDays(1);
         var endDate = DateTime.Now.AddDays(3);
-        var carModel = "NonExistentModel";
+        var carModel = "NON_EXISTENT_MODEL";
 
         // Act
         var response = await _client.GetAsync(

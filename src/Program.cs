@@ -4,6 +4,21 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReactApp",
+        builder =>
+        {
+            builder
+                .WithOrigins(
+                    "http://localhost:5173", // vite dev server
+                    "http://localhost:3000"  // production/docker
+                )
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+        });
+});
+
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddControllers();
@@ -19,6 +34,8 @@ builder.Services.AddServices();
 builder.Services.AddRepositories();
 
 var app = builder.Build();
+
+app.UseCors("AllowReactApp");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

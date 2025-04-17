@@ -6,7 +6,7 @@ using CarRental.src.Services.Implementations;
 using CarRental.src.Services.Interfaces;
 using FluentResults;
 using Moq;
-
+using WebApiTests.TestData;
 namespace WebApiTests.UnitTests.Services;
 
 public class ReservationServiceTests
@@ -45,7 +45,7 @@ public class ReservationServiceTests
             Email: "john.doe@example.com",
             StartDate: DateTime.Now.AddDays(1),
             EndDate: DateTime.Now.AddDays(3),
-            CarModel: "Model3",
+            CarModel: "TESLA_MODEL_3",
             PickupLocation: "PAP",
             ReturnLocation: "PAP"
         );
@@ -54,7 +54,8 @@ public class ReservationServiceTests
         {
             Id = Guid.NewGuid(),
             RegistrationNumber = "1234TM3",
-            CarModel = CarModel.Model3
+            CarModel = TestCarModels.Model3,
+            CarModelId = TestCarModels.Model3.Id
         };
 
         var pickupLocation = new Location("PAP", "Palma Airport", "Airport address");
@@ -69,7 +70,7 @@ public class ReservationServiceTests
             .ReturnsAsync(new List<Reservation>());
 
         _pricingServiceMock
-            .Setup(x => x.CalculatePrice(CarModel.Model3, request.StartDate, request.EndDate))
+            .Setup(x => x.CalculatePrice(TestCarModels.Model3, request.StartDate, request.EndDate))
             .Returns(Result.Ok(300.0));
 
         _locationRepositoryMock
@@ -101,7 +102,7 @@ public class ReservationServiceTests
             Email: "john.doe@example.com",
             StartDate: DateTime.Now.AddDays(1),
             EndDate: DateTime.Now.AddDays(3),
-            CarModel: "Model3",
+            CarModel: "TESLA_MODEL_3",
             PickupLocation: "PAP",
             ReturnLocation: "PAP"
         );
@@ -110,7 +111,8 @@ public class ReservationServiceTests
         {
             Id = Guid.NewGuid(),
             RegistrationNumber = "1234TM3",
-            CarModel = CarModel.Model3
+            CarModel = TestCarModels.Model3,
+            CarModelId = TestCarModels.Model3.Id
         };
 
         var existingReservation = new Reservation(
@@ -151,7 +153,7 @@ public class ReservationServiceTests
             Email: "john.doe@example.com",
             StartDate: DateTime.Now.AddDays(1),
             EndDate: DateTime.Now.AddDays(3),
-            CarModel: "Model3",
+            CarModel: "TESLA_MODEL_3",
             PickupLocation: "INVALID",
             ReturnLocation: "PAP"
         );
@@ -160,7 +162,8 @@ public class ReservationServiceTests
         {
             Id = Guid.NewGuid(),
             RegistrationNumber = "1234TM3",
-            CarModel = CarModel.Model3
+            CarModel = TestCarModels.Model3,
+            CarModelId = TestCarModels.Model3.Id
         };
 
         _carRepositoryMock
@@ -172,7 +175,7 @@ public class ReservationServiceTests
             .ReturnsAsync(new List<Reservation>());
 
         _pricingServiceMock
-            .Setup(x => x.CalculatePrice(CarModel.Model3, request.StartDate, request.EndDate))
+            .Setup(x => x.CalculatePrice(TestCarModels.Model3, request.StartDate, request.EndDate))
             .Returns(Result.Ok(300.0));
 
         // Setup both location calls
@@ -198,7 +201,7 @@ public class ReservationServiceTests
             Email: "john.doe@example.com",
             StartDate: DateTime.Now.AddDays(1),
             EndDate: DateTime.Now.AddDays(3),
-            CarModel: "Model3",
+            CarModel: "TESLA_MODEL_3",
             PickupLocation: "PAP",
             ReturnLocation: "PAP"
         );
@@ -207,7 +210,8 @@ public class ReservationServiceTests
         {
             Id = Guid.NewGuid(),
             RegistrationNumber = "1234TM3",
-            CarModel = CarModel.Model3
+            CarModel = TestCarModels.Model3,
+            CarModelId = TestCarModels.Model3.Id
         };
 
         _carRepositoryMock
@@ -219,7 +223,7 @@ public class ReservationServiceTests
             .ReturnsAsync(new List<Reservation>());
 
         _pricingServiceMock
-            .Setup(x => x.CalculatePrice(CarModel.Model3, request.StartDate, request.EndDate))
+            .Setup(x => x.CalculatePrice(TestCarModels.Model3, request.StartDate, request.EndDate))
             .Returns(Result.Fail<double>("Pricing calculation failed"));
 
         // Act
@@ -240,7 +244,7 @@ public class ReservationServiceTests
             Email: "john.doe@example.com",
             StartDate: DateTime.Now.AddDays(1),
             EndDate: DateTime.Now.AddDays(1),
-            CarModel: "Model3",
+            CarModel: "TESLA_MODEL_3",
             PickupLocation: "PAP",
             ReturnLocation: "PAP"
         );
@@ -251,7 +255,8 @@ public class ReservationServiceTests
         {
             Id = Guid.NewGuid(),
             RegistrationNumber = "1234TM3",
-            CarModel = CarModel.Model3
+            CarModel = TestCarModels.Model3,
+            CarModelId = TestCarModels.Model3.Id
         };
 
         _carRepositoryMock
@@ -263,8 +268,8 @@ public class ReservationServiceTests
             .ReturnsAsync(new List<Reservation>());
 
         _pricingServiceMock
-        .Setup(x => x.CalculatePrice(CarModel.Model3, request.StartDate, request.EndDate))
-        .Returns(Result.Ok(100.0));
+            .Setup(x => x.CalculatePrice(TestCarModels.Model3, request.StartDate, request.EndDate))
+            .Returns(Result.Ok(100.0));
 
         _locationRepositoryMock
             .Setup(x => x.GetByCode("PAP"))
@@ -302,7 +307,7 @@ public class ReservationServiceTests
             Email: "john.doe@example.com",
             StartDate: newStartDate,
             EndDate: newEndDate,
-            CarModel: "Model3",
+            CarModel: "TESLA_MODEL_3",
             PickupLocation: "PAP",
             ReturnLocation: "PAP"
         );
@@ -311,7 +316,8 @@ public class ReservationServiceTests
         {
             Id = Guid.NewGuid(),
             RegistrationNumber = "1234TM3",
-            CarModel = CarModel.Model3
+            CarModel = TestCarModels.Model3,
+            CarModelId = TestCarModels.Model3.Id
         };
 
         var existingReservation = new Reservation(

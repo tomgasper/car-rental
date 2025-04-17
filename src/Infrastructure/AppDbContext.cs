@@ -12,15 +12,20 @@ public class AppDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        // Configure the Car entity
-        modelBuilder.Entity<Car>()
-            .HasOne(c => c.Location)
-            .WithMany()
-            .HasForeignKey(c => c.LocationId)
-            .IsRequired();
+        modelBuilder.Entity<CarModel>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.HasIndex(e => e.Code).IsUnique();
+            
+            entity.HasMany(e => e.Cars)
+                  .WithOne(e => e.CarModel)
+                  .HasForeignKey(e => e.CarModelId)
+                  .IsRequired();
+        });
     }
 
     public DbSet<Car> Cars { get; set; }
+    public DbSet<CarModel> CarModels { get; set; }
     public DbSet<Reservation> Reservations { get; set; }
     public DbSet<CarPricingRule> CarPricingRules { get; set; }
     public DbSet<Location> Locations { get; set; }

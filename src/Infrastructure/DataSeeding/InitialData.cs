@@ -12,32 +12,60 @@ public static class InitialData
         new Location("MAN", "Manacor", "Avinguda del Parc, 07500 Manacor, Illes Balears")
     };
 
+    public static readonly List<CarModel> CarModels = new()
+    {
+        new CarModel(
+            code: "ModelS",
+            name: "Tesla Model S",
+            description: "Luxury electric sedan with exceptional range and performance",
+            thumbnailUrl: "https://media.ed.edmunds-media.com/tesla/model-s/2025/oem/2025_tesla_model-s_sedan_plaid_fq_oem_1_1600.jpg"
+        ),
+        new CarModel(
+            code: "Model3",
+            name: "Tesla Model 3",
+            description: "All-electric fastback that combines efficiency with style",
+            thumbnailUrl: "https://www.milivolt.pl/wp-content/uploads/2020/02/Tesla_Model_3-102x.jpg"
+        ),
+        new CarModel(
+            code: "ModelX",
+            name: "Tesla Model X",
+            description: "Premium electric SUV with falcon-wing doors",
+            thumbnailUrl: "https://e-mobilni.pl/wp-content/uploads/2024/08/tesla-model-x-11.jpg"
+        ),
+        new CarModel(
+            code: "ModelY",
+            name: "Tesla Model Y",
+            description: "Compact electric SUV with versatile interior space",
+            thumbnailUrl: "https://cms.vehistools.pl/images/article/ng3JuiQYlL1E1JGTj0nbWWE1MLtTW0PY9zmnuD47.webp"
+        )
+    };
+
     public static readonly List<CarPricingRule> PricingRules = new()
     {
-        new CarPricingRule { Id = Guid.NewGuid(), CarModel = CarModel.ModelS, DailyRate = 150.00 },
-        new CarPricingRule { Id = Guid.NewGuid(), CarModel = CarModel.Model3, DailyRate = 100.00 },
-        new CarPricingRule { Id = Guid.NewGuid(), CarModel = CarModel.ModelX, DailyRate = 170.00 },
-        new CarPricingRule { Id = Guid.NewGuid(), CarModel = CarModel.ModelY, DailyRate = 120.00 }
+        new CarPricingRule { Id = Guid.NewGuid(), CarModelId = CarModels[0].Id, DailyRate = 150.00 },
+        new CarPricingRule { Id = Guid.NewGuid(), CarModelId = CarModels[1].Id, DailyRate = 100.00 },
+        new CarPricingRule { Id = Guid.NewGuid(), CarModelId = CarModels[2].Id, DailyRate = 170.00 },
+        new CarPricingRule { Id = Guid.NewGuid(), CarModelId = CarModels[3].Id, DailyRate = 120.00 }
     };
 
     public static readonly List<Car> Cars = new()
     {
         // Model S cars
-        new Car { Id = Guid.NewGuid(), RegistrationNumber = "1234TMS", CarModel = CarModel.ModelS, LocationId = Locations[0].Id },
-        new Car { Id = Guid.NewGuid(), RegistrationNumber = "5678TMS", CarModel = CarModel.ModelS, LocationId = Locations[1].Id },
+        new Car { Id = Guid.NewGuid(), RegistrationNumber = "1234TMS", CarModelId = CarModels[0].Id },
+        new Car { Id = Guid.NewGuid(), RegistrationNumber = "5678TMS", CarModelId = CarModels[0].Id },
         
         // Model 3 cars
-        new Car { Id = Guid.NewGuid(), RegistrationNumber = "1234TM3", CarModel = CarModel.Model3, LocationId = Locations[0].Id },
-        new Car { Id = Guid.NewGuid(), RegistrationNumber = "5678TM3", CarModel = CarModel.Model3, LocationId = Locations[1].Id },
-        new Car { Id = Guid.NewGuid(), RegistrationNumber = "9012TM3", CarModel = CarModel.Model3, LocationId = Locations[2].Id },
+        new Car { Id = Guid.NewGuid(), RegistrationNumber = "1234TM3", CarModelId = CarModels[1].Id },
+        new Car { Id = Guid.NewGuid(), RegistrationNumber = "5678TM3", CarModelId = CarModels[1].Id },
+        new Car { Id = Guid.NewGuid(), RegistrationNumber = "9012TM3", CarModelId = CarModels[1].Id },
         
         // Model X cars
-        new Car { Id = Guid.NewGuid(), RegistrationNumber = "1234TMX", CarModel = CarModel.ModelX, LocationId = Locations[0].Id },
-        new Car { Id = Guid.NewGuid(), RegistrationNumber = "5678TMX", CarModel = CarModel.ModelX, LocationId = Locations[1].Id },
+        new Car { Id = Guid.NewGuid(), RegistrationNumber = "1234TMX", CarModelId = CarModels[2].Id },
+        new Car { Id = Guid.NewGuid(), RegistrationNumber = "5678TMX", CarModelId = CarModels[2].Id },
         
         // Model Y cars
-        new Car { Id = Guid.NewGuid(), RegistrationNumber = "1234TMY", CarModel = CarModel.ModelY, LocationId = Locations[0].Id },
-        new Car { Id = Guid.NewGuid(), RegistrationNumber = "5678TMY", CarModel = CarModel.ModelY, LocationId = Locations[2].Id }
+        new Car { Id = Guid.NewGuid(), RegistrationNumber = "1234TMY", CarModelId = CarModels[3].Id },
+        new Car { Id = Guid.NewGuid(), RegistrationNumber = "5678TMY", CarModelId = CarModels[3].Id }
     };
 
     public static readonly List<Reservation> Reservations = new()

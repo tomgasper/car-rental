@@ -48,12 +48,15 @@ public class TestWebApplicationFactory<TProgram> : WebApplicationFactory<TProgra
                 db.Database.EnsureCreated();
 
                 // seed test data
-                if (!db.Locations.Any())
+                if (!db.Locations.Any() || !db.CarPricingRules.Any() || !db.CarModels.Any() || !db.Cars.Any() || !db.Reservations.Any())
                 {
                     db.Locations.AddRange(InitialData.Locations);
                     db.SaveChanges();
 
                     db.CarPricingRules.AddRange(InitialData.PricingRules);
+                    db.SaveChanges();
+
+                    db.CarModels.AddRange(InitialData.CarModels);
                     db.SaveChanges();
 
                     db.Cars.AddRange(InitialData.Cars);

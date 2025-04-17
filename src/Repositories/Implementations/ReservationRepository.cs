@@ -17,21 +17,17 @@ sealed class ReservationRepository : IReservationRepository
         _dbContext.Reservations.Add(reservation);
     }
 
-    public async Task<List<Reservation>> GetByModelAndDate(string carModel, DateTime startDate, DateTime endDate)
+    public async Task<List<Reservation>> GetByModelAndDate(string carModelCode, DateTime startDate, DateTime endDate)
     {
-        if (Enum.TryParse<CarModel>(carModel, out CarModel parsedModel))
-        {
-            return await _dbContext.Reservations
-                .Include(reservation => reservation.Car)
-                .Where(reservation => 
-                    reservation.Car.CarModel == parsedModel &&
-                    (reservation.ReservationStatus == ReservationStatus.Confirmed || 
-                     reservation.ReservationStatus == ReservationStatus.Planned) &&
-                    ((startDate >= reservation.StartDate && startDate <= reservation.EndDate) ||
-                    (endDate >= reservation.StartDate && endDate <= reservation.EndDate)))
-                .ToListAsync();
-        }
-
-        return new List<Reservation>();
+        return await _dbContext.Reservations
+            .Include(reservation => reservation.Car)
+                .ThenInclude( car => car.CarModel)
+            .Where(reservation => 
+                reservation.Car.CarModel.Code == carModelCode &&
+                (reservation.ReservationStatus == ReservationStatus.Confirmed || 
+                    reservation.ReservationStatus == ReservationStatus.Planned) &&
+                ((startDate >= reservation.StartDate && startDate <= reservation.EndDate) ||
+                (endDate >= reservation.StartDate && endDate <= reservation.EndDate)))
+            .ToListAsync();
     }
 }
