@@ -62,12 +62,13 @@ public sealed class CarService : ICarService
             var pricing = await _carPricingRepository.GetByModel(car.CarModel);
             if (pricing == null) continue;
 
+            var bookingDays = (endDate - startDate).TotalDays;
             carResponses.Add(new CarAvailabilityResponse(
                 Id: car.Id,
                 RegistrationNumber: car.RegistrationNumber,
                 CarModelName: car.CarModel.Name,
                 CarModelCode: car.CarModel.Code,
-                TotalPrice: pricing.DailyRate * (endDate - startDate).TotalDays
+                TotalPrice: bookingDays > 1 ? pricing.DailyRate * bookingDays : pricing.DailyRate
             ));
         }
 
