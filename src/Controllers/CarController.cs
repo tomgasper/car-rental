@@ -14,8 +14,21 @@ public sealed class CarController : ApiController
         _carService = carService;
     }
 
+    [HttpGet]
+    public async Task<IActionResult> GetCarModels()
+    {
+        Result<List<CarModelResponse>> result = await _carService.GetCarModels();   
+
+        if (result.IsFailed)
+        {
+            return Problem(result.Errors);
+        }
+
+        return Ok(result.Value);
+    }
+
     [HttpGet("availability")]
-    public async Task<IActionResult> GetCars(
+    public async Task<IActionResult> GetAvailableCars(
         [FromQuery][Required] DateTime startDate,
         [FromQuery][Required] DateTime endDate,
         [FromQuery][Required] string carModel)

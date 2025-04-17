@@ -73,4 +73,23 @@ public sealed class CarService : ICarService
 
         return Result.Ok(carResponses);
     }
+
+    public async Task<Result<List<CarModelResponse>>> GetCarModels()
+    {
+        var carModels = await _carRepository.GetAllModels();
+
+        if (!carModels.Any())
+        {
+            return Result.Fail<List<CarModelResponse>>(new NotFoundError("No car models were found."));
+        }
+
+        var response = carModels.Select(model => new CarModelResponse(
+            Id: model.Code,
+            Name: model.Name,
+            Description: model.Description,
+            Image: model.ThumbnailUrl
+        )).ToList();
+
+        return Result.Ok(response);
+    }
 } 

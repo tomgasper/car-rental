@@ -22,4 +22,11 @@ class CarRepository : ICarRepository
     {
         return await _dbContext.Cars.Include(c => c.CarModel).Where( model => model.CarModel.Code == carModelCode).ToListAsync();
     }
+
+    public async Task<List<CarModel>> GetAllModels()
+    {
+        return await _dbContext.CarModels
+            .AsNoTracking()
+            .ToListAsync();
+    }
 }

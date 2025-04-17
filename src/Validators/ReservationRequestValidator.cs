@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 public class ReservationRequestValidator : AbstractValidator<ReservationRequest>
 {
-    private static readonly Regex PhoneRegex = new(@"^\+?[\d\s-]{8,}$", RegexOptions.Compiled);
+    private static readonly Regex PhoneRegex = new(@"^\+?\d{8,}$", RegexOptions.Compiled);
     
     public ReservationRequestValidator()
     {
@@ -25,7 +25,7 @@ public class ReservationRequestValidator : AbstractValidator<ReservationRequest>
 
         RuleFor(x => x.PhoneNumber)
             .NotEmpty()
-            .Matches(PhoneRegex).WithMessage("Invalid phone number format");
+            .Matches(PhoneRegex).WithMessage("Phone number must contain at least 8 digits and can start with '+' (e.g., +34611223344 or 123456789)");
 
         RuleFor(x => x.StartDate)
             .NotEmpty()

@@ -47,7 +47,7 @@ public class CarControllerTests
             .ReturnsAsync(Result.Ok(expectedCars));
 
         // Act
-        var result = await _controller.GetCars(startDate, endDate, carModel);
+        var result = await _controller.GetAvailableCars(startDate, endDate, carModel);
 
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(result);
@@ -73,7 +73,7 @@ public class CarControllerTests
             .ReturnsAsync(Result.Fail(new ValidationError("Start date must be before end date", "startDate")));
 
         // Act
-        var result = await _controller.GetCars(startDate, endDate, carModel);
+        var result = await _controller.GetAvailableCars(startDate, endDate, carModel);
 
         // Assert
         var objectResult = Assert.IsType<ObjectResult>(result);
@@ -93,7 +93,7 @@ public class CarControllerTests
             .ReturnsAsync(Result.Fail(new NotFoundError($"No cars were found for the provided dates and model: {carModel}.")));
 
         // Act
-        var result = await _controller.GetCars(startDate, endDate, carModel);
+        var result = await _controller.GetAvailableCars(startDate, endDate, carModel);
 
         // Assert
         var objectResult = Assert.IsType<ObjectResult>(result);
@@ -114,7 +114,7 @@ public class CarControllerTests
             .ReturnsAsync(Result.Fail(new ValidationError("Start date must be in the future", "startDate")));
 
         // Act
-        var result = await _controller.GetCars(startDate, endDate, carModel);
+        var result = await _controller.GetAvailableCars(startDate, endDate, carModel);
 
         // Assert
         var objectResult = Assert.IsType<ObjectResult>(result);
