@@ -1,7 +1,8 @@
 import type { ReservationFormData } from "@/lib/types"
 import { ApiError } from "./api-error"
 
-const API_URL = import.meta.env.VITE_API_URL
+// const API_URL = import.meta.env.VITE_API_URL
+import { API_URL } from "./constants"
 
 export class ReservationService {
   static async checkAvailability(formData: ReservationFormData) {
