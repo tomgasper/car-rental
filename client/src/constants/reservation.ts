@@ -1,35 +1,35 @@
 // Mock data for locations and Tesla models
 export const LOCATIONS = [
-    { id: "palma-airport", name: "Palma Airport" },
-    { id: "palma-city", name: "Palma City Center" },
-    { id: "alcudia", name: "Alcudia" },
-    { id: "manacor", name: "Manacor" },
+    { id: "PAP", name: "Palma Airport" },
+    { id: "PCC", name: "Palma City Center" },
+    { id: "ALC", name: "Alcudia" },
+    { id: "MAN", name: "Manacor" },
   ]
   
   export const TESLA_MODELS = [
     {
-      id: "model-3",
+      id: "TESLA_MODEL_3",
       name: "Model 3",
       image: "/placeholder.svg?height=150&width=250",
       pricePerDay: 89,
       description: "The most affordable Tesla sedan with great range and performance.",
     },
     {
-      id: "model-s",
+      id: "TESLA_MODEL_S",
       name: "Model S",
       image: "/placeholder.svg?height=150&width=250",
       pricePerDay: 149,
       description: "Premium sedan with long range and incredible acceleration.",
     },
     {
-      id: "model-x",
+      id: "TESLA_MODEL_X",
       name: "Model X",
       image: "/placeholder.svg?height=150&width=250",
       pricePerDay: 179,
       description: "Luxury SUV with falcon-wing doors and spacious interior.",
     },
     {
-      id: "model-y",
+      id: "TESLA_MODEL_Y",
       name: "Model Y",
       image: "/placeholder.svg?height=150&width=250",
       pricePerDay: 119,

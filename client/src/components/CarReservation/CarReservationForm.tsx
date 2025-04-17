@@ -1,8 +1,11 @@
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import type { ReservationFormData } from "@/lib/types"
 import { InitialReservationForm } from "./ReservationSteps/InitialReservationForm/InitialReservationForm"
 import { Confirmation } from "./ReservationSteps/Confirmation/Confirmation"
 import { Complete } from "./ReservationSteps/Complete/Complete"
+import { useReservationForm } from "@/hooks/useReservationForm"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { AlertCircle } from "lucide-react"
 
 // form steps
 const STEPS = {
@@ -12,50 +15,33 @@ const STEPS = {
   }
 
 export default function ReservationForm() {
-  // get step from URL query parameter or default to initial step
-  const getStepFromUrl = (): number => {
-    const searchParams = new URLSearchParams(window.location.search)
-    const stepParam = searchParams.get("step")
-    if (stepParam) {
-      const parsedStep = Number.parseInt(stepParam, 10)
-      if (!isNaN(parsedStep) && parsedStep >= 0 && parsedStep <= 2) {
-        return parsedStep
-      }
-    }
-    return STEPS.RESERVATION_FORM
-  }
-
-  const [step, setStep] = useState(getStepFromUrl())
-  const [formData, setFormData] = useState<ReservationFormData>({
-    startDate: undefined,
-    endDate: undefined,
-    pickupLocation: "",
-    returnLocation: "",
-    carModel: "",
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-  })
-  const [reservationId, setReservationId] = useState("")
-  const [isLoading, setIsLoading] = useState(false)
-
-  // update URL when step changes
-  const updateStep = (newStep: number) => {
-    const searchParams = new URLSearchParams(window.location.search)
-
-    searchParams.set("step", newStep.toString())
-
-    const newUrl = `${window.location.pathname}?${searchParams.toString()}`
-    window.history.pushState({ step: newStep }, "", newUrl)
-    
-    setStep(newStep)
-  }
+  const {
+    formData,
+    step,
+    isLoading,
+    error,
+    reservationId,
+    handleInputChange,
+    handleCheckAvailability,
+    handleConfirmReservation,
+    handleBack,
+    handleReset,
+    setStep,
+  } = useReservationForm()
 
   // listen for popstate events (browser back/forward buttons)
   useEffect(() => {
     const handlePopState = () => {
-      setStep(getStepFromUrl())
+      const searchParams = new URLSearchParams(window.location.search)
+      const stepParam = searchParams.get("step")
+      if (stepParam) {
+        const parsedStep = Number.parseInt(stepParam, 10)
+        if (!isNaN(parsedStep) && parsedStep >= 0 && parsedStep <= 2) {
+          setStep(parsedStep)
+          return
+        }
+      }
+      setStep(STEPS.RESERVATION_FORM)
     }
 
     window.addEventListener("popstate", handlePopState)
@@ -64,107 +50,64 @@ export default function ReservationForm() {
     }
   }, [])
 
-  const handleInputChange = (field: keyof ReservationFormData, value: any) => {
-    setFormData((prev) => ({
-      ...prev,
-      [field]: value,
-    }))
+  return (
+    <div className="space-y-4">
+      {error && (
+        <Alert variant="destructive">
+          <AlertCircle className="h-4 w-4" />
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
+      )}
+
+      {renderStep(step, {
+        formData,
+        isLoading,
+        reservationId,
+        onInputChange: handleInputChange,
+        onCheckAvailability: handleCheckAvailability,
+        onConfirm: handleConfirmReservation,
+        onBack: handleBack,
+        onReset: handleReset,
+      })}
+    </div>
+  )
+}
+
+function renderStep(
+  step: number,
+  props: {
+    formData: ReservationFormData
+    isLoading: boolean
+    reservationId: string
+    onInputChange: (field: keyof ReservationFormData, value: any) => void
+    onCheckAvailability: () => Promise<void>
+    onConfirm: () => Promise<void>
+    onBack: () => void
+    onReset: () => void
   }
-
-  const fetchCarAvailability = async () => {
-    const queryParams = new URLSearchParams({
-      startDate: formData.startDate?.toISOString() || "",
-      endDate: formData.endDate?.toISOString() || "",
-      carModel: formData.carModel || "",
-      pickupLocation: formData.pickupLocation || "",
-      returnLocation: formData.returnLocation || "",
-    });
-
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/cars?${queryParams.toString()}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-    const data = await response.json();
-    console.log(data);
-    if (data.status != 200) {
-      if (data.errors && data.errors.length > 0) {
-        throw new Error(data.errors[0]);
-      } else {
-        throw new Error(data.title);
-      }
-    }
-    return data
-  }
-
-  const handleCheckAvailability = async() => {
-    setIsLoading(true)
-    try {
-      const availability = await fetchCarAvailability()
-      console.log(availability)
-      updateStep(STEPS.AVAILABILITY_CONFIRMATION)
-    } catch (error) {
-      console.error("Error fetching car availability. ", error)
-    } finally {
-      setIsLoading(false)
-    }
-  }
-
-  const handleBack = () => {
-    window.history.back()
-  }
-
-  // Reset form and start over
-  const handleReset = () => {
-    setFormData({
-      startDate: undefined,
-      endDate: undefined,
-      pickupLocation: "",
-      returnLocation: "",
-      carModel: "",
-      firstName: "",
-      lastName: "",
-      email: "",
-      phone: "",
-    })
-    updateStep(STEPS.RESERVATION_FORM)
-  }
-
-  const handleConfirmReservation = () => {
-    setIsLoading(true)
-    // simulate API call for now
-    setTimeout(() => {
-      const id = "1234567890"
-      setReservationId(id)
-      setIsLoading(false)
-      updateStep(STEPS.RESERVATION_COMPLETE)
-    }, 1500)
-  }
-
-  // render the appropriate step
+) {
   switch (step) {
     case STEPS.RESERVATION_FORM:
       return (
         <InitialReservationForm
-          formData={formData}
-          onInputChange={handleInputChange}
-          onCheckAvailability={handleCheckAvailability}
-          isLoading={isLoading}
+          formData={props.formData}
+          onInputChange={props.onInputChange}
+          onCheckAvailability={props.onCheckAvailability}
+          isLoading={props.isLoading}
         />
       )
-      case STEPS.AVAILABILITY_CONFIRMATION:
+    case STEPS.AVAILABILITY_CONFIRMATION:
       return (
         <Confirmation
-          formData={formData}
-          onInputChange={handleInputChange}
-          onBack={handleBack}
-          onConfirm={handleConfirmReservation}
-          isLoading={isLoading}
+          formData={props.formData}
+          onInputChange={props.onInputChange}
+          onBack={props.onBack}
+          onConfirm={props.onConfirm}
+          isLoading={props.isLoading}
         />
       )
-      case STEPS.RESERVATION_COMPLETE:
-      return <Complete formData={formData} reservationId={reservationId} onReset={handleReset} />
+    case STEPS.RESERVATION_COMPLETE:
+      return <Complete formData={props.formData} reservationId={props.reservationId} onReset={props.onReset} />
     default:
       return null
   }
