@@ -14,7 +14,7 @@ const STEPS = {
     RESERVATION_COMPLETE: 2,
   }
 
-export default function ReservationForm() {
+export default function CarReservationForm() {
   const {
     formData,
     step,

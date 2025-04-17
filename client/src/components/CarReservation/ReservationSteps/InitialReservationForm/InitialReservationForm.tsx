@@ -18,7 +18,7 @@ export function InitialReservationForm({ formData, onInputChange, onCheckAvailab
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Reservation Details</CardTitle>
+        <CardTitle>Book a Tesla</CardTitle>
         <CardDescription>Enter your rental details to check availability</CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
