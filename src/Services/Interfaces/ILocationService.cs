@@ -1,4 +1,4 @@
-using CarRental.src.DTOs.Location;
+using CarRental.DTOs.Location;
 using FluentResults;
 
 namespace CarRental.src.Services.Interfaces;

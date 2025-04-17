@@ -1,4 +1,4 @@
-using CarRental.src.DTOs.Location;
+using CarRental.DTOs.Location;
 using CarRental.src.Repositories.Interfaces;
 using CarRental.src.Services.Interfaces;
 using FluentResults;
@@ -25,7 +25,8 @@ public class LocationService : ILocationService
 
         var response = locations.Select(location => new LocationResponse(
             Id: location.LocationCode,
-            Name: location.Name
+            Name: location.Name,
+            Address: location.Address
         )).ToList();
 
         return Result.Ok(response);

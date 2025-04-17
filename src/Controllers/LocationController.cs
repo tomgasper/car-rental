@@ -1,4 +1,4 @@
-using CarRental.src.DTOs.Location;
+using CarRental.DTOs.Location;
 using CarRental.src.Services.Interfaces;
 using FluentResults;
 using Microsoft.AspNetCore.Mvc;
