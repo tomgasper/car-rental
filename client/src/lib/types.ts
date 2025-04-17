@@ -1,6 +1,7 @@
 export interface Location {
     id: string
     name: string
+    address: string
   }
   
   export interface TeslaModel {
@@ -28,5 +29,12 @@ export interface Location {
     formData: ReservationFormData
     totalPrice: number
     days: number
+  }
+  
+  export interface CarModel {
+    id: string
+    name: string
+    description: string
+    image: string
   }
   

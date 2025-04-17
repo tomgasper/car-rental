@@ -30,4 +30,20 @@ export class CarService {
 
     return data
   }
+
+  static async getCarModels() {
+    const response = await fetch(`${API_URL}/v1/api/cars`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+  
+    const data = await response.json()
+    if (!response.ok) {
+      throw new Error(data.errors?.[0] || "Failed to fetch car models")
+    }
+  
+    return data
+  }
 }

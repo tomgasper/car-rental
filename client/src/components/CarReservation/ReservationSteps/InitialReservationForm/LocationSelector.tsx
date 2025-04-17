@@ -1,8 +1,6 @@
-"use client"
-
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { LOCATIONS } from "@/constants/reservation"
+import { useCarRentalData } from "@/hooks/useCarRentalData"
 
 interface LocationSelectorProps {
   label: string
@@ -12,15 +10,17 @@ interface LocationSelectorProps {
 }
 
 export function LocationSelector({ label, value, onChange, id }: LocationSelectorProps) {
+  const { locations, isLoading } = useCarRentalData()
+
   return (
     <div className="space-y-2">
       <Label htmlFor={id}>{label}</Label>
-      <Select value={value} onValueChange={onChange}>
+      <Select value={value} onValueChange={onChange} disabled={isLoading}>
         <SelectTrigger id={id}>
           <SelectValue placeholder="Select location" />
         </SelectTrigger>
         <SelectContent>
-          {LOCATIONS.map((location) => (
+          {locations.map((location) => (
             <SelectItem key={location.id} value={location.id}>
               {location.name}
             </SelectItem>

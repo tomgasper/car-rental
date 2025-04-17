@@ -1,17 +1,17 @@
 import { format } from "date-fns"
 import { CalendarIcon, MapPin } from "lucide-react"
 import type { ReservationFormData } from "@/lib/types"
-import { getSelectedCar } from "@/lib/utils/reservation"
-import { LOCATIONS } from "@/constants/reservation"
+import { useCarRentalData } from "@/hooks/useCarRentalData"
 
 interface ReservationSummaryProps {
   formData: ReservationFormData
 }
 
 export function ReservationSummary({ formData }: ReservationSummaryProps) {
-  const car = getSelectedCar(formData.carModel)
-  const pickupLocationName = LOCATIONS.find((loc) => loc.id === formData.pickupLocation)?.name
-  const returnLocationName = LOCATIONS.find((loc) => loc.id === formData.returnLocation)?.name
+  const { carModels, locations } = useCarRentalData()
+  const car = carModels.find((model) => model.id === formData.carModel)
+  const pickupLocationName = locations.find((loc) => loc.id === formData.pickupLocation)?.name
+  const returnLocationName = locations.find((loc) => loc.id === formData.returnLocation)?.name
 
   return (
     <div className="flex flex-col md:flex-row gap-6 items-center">
