@@ -2,6 +2,7 @@ import { useState } from "react"
 import type { ReservationFormData } from "@/lib/types"
 import { ReservationService } from "@/services/api/reservation"
 import { getErrorMessages } from "@/services/api/error"
+import { ApiError } from "@/services/api/api-error"
 
 interface UseReservationFormReturn {
   formData: ReservationFormData
@@ -74,7 +75,11 @@ export function useReservationForm(): UseReservationFormReturn {
       }
       updateStep(STEPS.AVAILABILITY_CONFIRMATION)
     } catch (error) {
-      setError(getErrorMessages(error?.details as any[]) || "Failed to check availability");
+        if (error instanceof ApiError) {
+            setError(getErrorMessages(error.details) || "Failed to check availability");
+        } else {
+            setError("Failed to check availability");
+        }
     } finally {
       setIsLoading(false)
     }
@@ -88,7 +93,11 @@ export function useReservationForm(): UseReservationFormReturn {
       setReservationId(reservation.reservationId)
       updateStep(STEPS.RESERVATION_COMPLETE)
     } catch (error) {
-      setError(getErrorMessages(error as any[]) || "Failed to create reservation")
+      if (error instanceof ApiError) {
+        setError(getErrorMessages(error.details) || "Failed to create reservation")
+      } else {
+        setError("Failed to create reservation")
+      }
     } finally {
       setIsLoading(false)
     }

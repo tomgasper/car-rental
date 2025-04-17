@@ -1,4 +1,7 @@
 function getErrorMessages(errors: any) {
+    if (errors == null) {
+        return "Unknown error occurred";
+    }
   if (errors && typeof errors === 'object') {
     return Object.values(errors)
       .flat()
