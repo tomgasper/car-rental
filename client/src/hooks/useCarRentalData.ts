@@ -1,4 +1,4 @@
-import { useCarRentalReservationContext } from "@/contexts/CarRentalReservationContext";
+import { useCarRentalReservationContext } from "@/contexts/CarRentalReservation/CarRentalReservationContext";
 
 export function useCarRentalData() {
   return useCarRentalReservationContext()
