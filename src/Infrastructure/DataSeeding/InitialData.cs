@@ -74,6 +74,7 @@ public static class InitialData
             car: Cars[0], // Model S at Airport
             customerName: "John Smith",
             customerEmail: "john.smith@email.com",
+            customerPhoneNumber: "1234567890",
             startDate: new DateTime(2025, 4, 20),
             endDate: new DateTime(2025, 4, 25),
             totalCost: 750.00, // 5 days * 150.00
@@ -85,6 +86,7 @@ public static class InitialData
             car: Cars[2], // Model 3 at Airport
             customerName: "Maria Garcia",
             customerEmail: "maria.garcia@email.com",
+            customerPhoneNumber: "1234567891",
             startDate: new DateTime(2025, 5, 1),
             endDate: new DateTime(2025, 5, 5),
             totalCost: 400.00, // 4 days * 100.00
@@ -96,6 +98,7 @@ public static class InitialData
             car: Cars[5], // Model X at Airport
             customerName: "David Brown",
             customerEmail: "david.brown@email.com",
+            customerPhoneNumber: "1234567892",
             startDate: new DateTime(2025, 6, 15),
             endDate: new DateTime(2025, 6, 20),
             totalCost: 850.00, // 5 days * 170.00

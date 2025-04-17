@@ -66,6 +66,7 @@ public sealed class ReservationService : IReservationService
             car: availableCar.Value,
             customerName: request.FirstName.Trim() + " " + request.LastName.Trim(),
             customerEmail: request.Email,
+            customerPhoneNumber: request.PhoneNumber,
             startDate: request.StartDate,
             endDate: request.EndDate,
             totalCost: totalCost.Value,

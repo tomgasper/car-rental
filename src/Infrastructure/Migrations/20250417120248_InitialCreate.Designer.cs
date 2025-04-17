@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CarRental.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250417061157_InitialCreate")]
+    [Migration("20250417120248_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -135,6 +135,10 @@ namespace CarRental.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("CustomerName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("CustomerPhoneNumber")
                         .IsRequired()
                         .HasColumnType("text");
 

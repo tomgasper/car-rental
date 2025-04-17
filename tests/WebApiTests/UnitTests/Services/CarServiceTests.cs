@@ -154,6 +154,7 @@ public class CarServiceTests
                 car: cars[1],
                 customerName: "Test User",
                 customerEmail: "test@example.com",
+                customerPhoneNumber: "1234567890",
                 startDate: startDate,
                 endDate: endDate,
                 totalCost: 200.0,

@@ -5,6 +5,7 @@ public class Reservation
     public Guid Id { get; set; }
     public string CustomerName { get; set; } = null!;
     public string CustomerEmail { get; set; } = null!;
+    public string CustomerPhoneNumber { get; set; } = null!;
     public Guid CarId { get; set; }
     public Car Car { get; set; } = null!;
     public DateTime StartDate { get; set; }
@@ -22,6 +23,7 @@ public class Reservation
         Car car,
         string customerName,
         string customerEmail,
+        string customerPhoneNumber,
         DateTime startDate,
         DateTime endDate,
         double totalCost,
@@ -32,6 +34,7 @@ public class Reservation
         Id = Guid.NewGuid();
         CustomerName = customerName;
         CustomerEmail = customerEmail;
+        CustomerPhoneNumber = customerPhoneNumber;
         Car = car;
         CarId = car.Id;
         StartDate = startDate;

@@ -86,6 +86,7 @@ namespace CarRental.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     CustomerName = table.Column<string>(type: "text", nullable: false),
                     CustomerEmail = table.Column<string>(type: "text", nullable: false),
+                    CustomerPhoneNumber = table.Column<string>(type: "text", nullable: false),
                     CarId = table.Column<Guid>(type: "uuid", nullable: false),
                     StartDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     EndDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
