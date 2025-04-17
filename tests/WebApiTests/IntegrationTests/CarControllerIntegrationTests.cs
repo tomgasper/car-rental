@@ -26,7 +26,7 @@ public class CarControllerIntegrationTests : IClassFixture<TestWebApplicationFac
 
         // Act
         var response = await _client.GetAsync(
-            $"/api/cars?startDate={startDate:yyyy-MM-dd}&endDate={endDate:yyyy-MM-dd}&carModel={carModel}");
+            $"/v1/api/cars/availability?startDate={startDate:yyyy-MM-dd}&endDate={endDate:yyyy-MM-dd}&carModel={carModel}");
 
         // Assert
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
@@ -53,7 +53,7 @@ public class CarControllerIntegrationTests : IClassFixture<TestWebApplicationFac
 
         // Act
         var response = await _client.GetAsync(
-            $"/api/cars?startDate={startDate:yyyy-MM-dd}&endDate={endDate:yyyy-MM-dd}&carModel={carModel}");
+            $"/v1/api/cars/availability?startDate={startDate:yyyy-MM-dd}&endDate={endDate:yyyy-MM-dd}&carModel={carModel}");
 
         // Assert
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
@@ -69,7 +69,7 @@ public class CarControllerIntegrationTests : IClassFixture<TestWebApplicationFac
 
         // Act
         var response = await _client.GetAsync(
-            $"/api/cars?startDate={startDate:yyyy-MM-dd}&endDate={endDate:yyyy-MM-dd}&carModel={carModel}");
+            $"/v1/api/cars/availability?startDate={startDate:yyyy-MM-dd}&endDate={endDate:yyyy-MM-dd}&carModel={carModel}");
 
         // Assert
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);

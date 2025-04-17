@@ -4,7 +4,7 @@ using CarRental.src.Services.Interfaces;
 using FluentResults;
 using Microsoft.AspNetCore.Mvc;
 
-[Route("api/cars")]
+[Route("v1/api/cars")]
 public sealed class CarController : ApiController 
 {
     private readonly ICarService _carService;
@@ -14,7 +14,7 @@ public sealed class CarController : ApiController
         _carService = carService;
     }
 
-    [HttpGet]
+    [HttpGet("availability")]
     public async Task<IActionResult> GetCars(
         [FromQuery][Required] DateTime startDate,
         [FromQuery][Required] DateTime endDate,
