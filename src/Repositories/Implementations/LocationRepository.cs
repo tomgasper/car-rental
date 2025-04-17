@@ -15,4 +15,11 @@ class LocationRepository : ILocationRepository
     {
         return await _dbContext.Locations.FirstOrDefaultAsync(location => location.LocationCode.Equals(locationCode));
     }
+
+    public async Task<List<Location>> GetAll()
+    {
+        return await _dbContext.Locations
+            .AsNoTracking()
+            .ToListAsync();
+    }
 }
