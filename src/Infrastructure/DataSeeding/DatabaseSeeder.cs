@@ -20,10 +20,10 @@ public static class DatabaseSeeder
             await context.Locations.AddRangeAsync(InitialData.Locations);
             await context.SaveChangesAsync();
 
-            await context.CarPricingRules.AddRangeAsync(InitialData.PricingRules);
+            await context.CarModels.AddRangeAsync(InitialData.CarModels);
             await context.SaveChangesAsync();
 
-            await context.CarModels.AddRangeAsync(InitialData.CarModels);
+            await context.CarPricingRules.AddRangeAsync(InitialData.PricingRules);
             await context.SaveChangesAsync();
 
             await context.Cars.AddRangeAsync(InitialData.Cars);

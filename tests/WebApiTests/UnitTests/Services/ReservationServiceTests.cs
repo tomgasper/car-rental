@@ -140,7 +140,7 @@ public class ReservationServiceTests
 
         // Assert
         Assert.True(result.IsFailed);
-        Assert.Contains(result.Errors, error => error.Message.Contains($"No {request.CarModel} was found"));
+        Assert.Contains(result.Errors, error => error.Message.Contains($"No car was found for the provided dates."));
     }
 
     [Fact]
@@ -349,6 +349,6 @@ public class ReservationServiceTests
 
         // Assert
         Assert.True(result.IsFailed);
-        Assert.Contains(result.Errors, error => error.Message.Contains("No Model3 was found for the provided dates."));
+        Assert.Contains(result.Errors, error => error.Message.Contains("No car was found for the provided dates."));
     }
 } 

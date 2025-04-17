@@ -45,6 +45,7 @@ public class TestWebApplicationFactory<TProgram> : WebApplicationFactory<TProgra
 
             try
             {
+                db.Database.EnsureDeleted();
                 db.Database.EnsureCreated();
 
                 // seed test data
@@ -53,10 +54,10 @@ public class TestWebApplicationFactory<TProgram> : WebApplicationFactory<TProgra
                     db.Locations.AddRange(InitialData.Locations);
                     db.SaveChanges();
 
-                    db.CarPricingRules.AddRange(InitialData.PricingRules);
+                    db.CarModels.AddRange(InitialData.CarModels);
                     db.SaveChanges();
 
-                    db.CarModels.AddRange(InitialData.CarModels);
+                    db.CarPricingRules.AddRange(InitialData.PricingRules);
                     db.SaveChanges();
 
                     db.Cars.AddRange(InitialData.Cars);

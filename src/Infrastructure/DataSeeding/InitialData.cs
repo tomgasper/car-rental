@@ -15,25 +15,25 @@ public static class InitialData
     public static readonly List<CarModel> CarModels = new()
     {
         new CarModel(
-            code: "ModelS",
+            code: "TESLA_MODEL_S",
             name: "Tesla Model S",
             description: "Luxury electric sedan with exceptional range and performance",
             thumbnailUrl: "https://media.ed.edmunds-media.com/tesla/model-s/2025/oem/2025_tesla_model-s_sedan_plaid_fq_oem_1_1600.jpg"
         ),
         new CarModel(
-            code: "Model3",
+            code: "TESLA_MODEL_3",
             name: "Tesla Model 3",
             description: "All-electric fastback that combines efficiency with style",
             thumbnailUrl: "https://www.milivolt.pl/wp-content/uploads/2020/02/Tesla_Model_3-102x.jpg"
         ),
         new CarModel(
-            code: "ModelX",
+            code: "TESLA_MODEL_X",
             name: "Tesla Model X",
             description: "Premium electric SUV with falcon-wing doors",
             thumbnailUrl: "https://e-mobilni.pl/wp-content/uploads/2024/08/tesla-model-x-11.jpg"
         ),
         new CarModel(
-            code: "ModelY",
+            code: "TESLA_MODEL_Y",
             name: "Tesla Model Y",
             description: "Compact electric SUV with versatile interior space",
             thumbnailUrl: "https://cms.vehistools.pl/images/article/ng3JuiQYlL1E1JGTj0nbWWE1MLtTW0PY9zmnuD47.webp"

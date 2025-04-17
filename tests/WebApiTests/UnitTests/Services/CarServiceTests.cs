@@ -116,7 +116,7 @@ public class CarServiceTests
         Assert.Single(availableCars);
         Assert.Equal(carId, availableCars[0].Id);
         Assert.Equal("1234TM3", availableCars[0].RegistrationNumber);
-        Assert.Equal("TESLA_MODEL_3", availableCars[0].CarModel);
+        Assert.Equal("TESLA_MODEL_3", availableCars[0].CarModelCode);
         Assert.Equal(200.0, availableCars[0].TotalPrice, precision: 2);
     }
 

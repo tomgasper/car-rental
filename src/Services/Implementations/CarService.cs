@@ -30,6 +30,11 @@ public sealed class CarService : ICarService
             return Result.Fail<List<CarAvailabilityResponse>>(new ValidationError("Start date must be before end date", "startDate"));
         }
 
+        if (startDate.Date < DateTime.Now.Date || endDate.Date < DateTime.Now.Date)
+        {
+            return Result.Fail<List<CarAvailabilityResponse>>(new ValidationError("Start date and end date must be in the future", "startDate"));
+        }
+
         // Get all cars of the specified model
         List<Car> cars = await _carRepository.GetByModel(carModel ?? "");
 
@@ -60,7 +65,8 @@ public sealed class CarService : ICarService
             carResponses.Add(new CarAvailabilityResponse(
                 Id: car.Id,
                 RegistrationNumber: car.RegistrationNumber,
-                CarModel: car.CarModel.ToString(),
+                CarModelName: car.CarModel.Name,
+                CarModelCode: car.CarModel.Code,
                 TotalPrice: pricing.DailyRate * (endDate - startDate).TotalDays
             ));
         }

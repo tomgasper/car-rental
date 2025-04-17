@@ -20,8 +20,8 @@ public class CarControllerIntegrationTests : IClassFixture<TestWebApplicationFac
     public async Task GetCars_WithValidRequest_ReturnsAvailableCars()
     {
         // Arrange
-        var startDate = DateTime.Now.AddDays(1);
-        var endDate = DateTime.Now.AddDays(3);
+        var startDate = DateTime.Now.AddDays(60);
+        var endDate = DateTime.Now.AddDays(62);
         var carModel = "TESLA_MODEL_3";
 
         // Act
@@ -37,7 +37,7 @@ public class CarControllerIntegrationTests : IClassFixture<TestWebApplicationFac
         
         // Verify car properties based on seeded data
         var firstCar = cars[0];
-        Assert.Equal("TESLA_MODEL_3", firstCar.CarModel);
+        Assert.Equal("TESLA_MODEL_3", firstCar.CarModelCode);
         Assert.NotEqual(Guid.Empty, firstCar.Id);
         Assert.NotEmpty(firstCar.RegistrationNumber);
         Assert.True(firstCar.TotalPrice > 0);
@@ -47,8 +47,8 @@ public class CarControllerIntegrationTests : IClassFixture<TestWebApplicationFac
     public async Task GetCars_WithInvalidDates_ReturnsBadRequest()
     {
         // Arrange
-        var startDate = DateTime.Now.AddDays(3);
-        var endDate = DateTime.Now.AddDays(1);
+        var startDate = DateTime.Now.AddDays(43);
+        var endDate = DateTime.Now.AddDays(41);
         var carModel = "TESLA_MODEL_3";
 
         // Act
@@ -63,8 +63,8 @@ public class CarControllerIntegrationTests : IClassFixture<TestWebApplicationFac
     public async Task GetCars_WithNonExistentModel_ReturnsNotFound()
     {
         // Arrange
-        var startDate = DateTime.Now.AddDays(1);
-        var endDate = DateTime.Now.AddDays(3);
+        var startDate = DateTime.Now.AddDays(61);
+        var endDate = DateTime.Now.AddDays(63);
         var carModel = "NON_EXISTENT_MODEL";
 
         // Act
