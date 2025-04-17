@@ -21,13 +21,12 @@ sealed class ReservationRepository : IReservationRepository
     {
         return await _dbContext.Reservations
             .Include(reservation => reservation.Car)
-                .ThenInclude( car => car.CarModel)
+                .ThenInclude(car => car.CarModel)
             .Where(reservation => 
                 reservation.Car.CarModel.Code == carModelCode &&
                 (reservation.ReservationStatus == ReservationStatus.Confirmed || 
                     reservation.ReservationStatus == ReservationStatus.Planned) &&
-                ((startDate >= reservation.StartDate && startDate <= reservation.EndDate) ||
-                (endDate >= reservation.StartDate && endDate <= reservation.EndDate)))
+                (startDate <= reservation.EndDate && endDate >= reservation.StartDate))
             .ToListAsync();
     }
 }
