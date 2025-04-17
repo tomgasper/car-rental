@@ -42,7 +42,7 @@ export function ReservationSummary({ formData }: ReservationSummaryProps) {
           <div className="flex items-center gap-2">
             <MapPin className="h-5 w-5 text-sm text-muted-foreground" />
             <div>
-              <div className="text-muted-foreground">Pickup Location</div>
+              <div className="text-sm text-muted-foreground">Pickup Location</div>
               <div>{pickupLocationName}</div>
             </div>
           </div>

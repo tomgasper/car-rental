@@ -12,8 +12,6 @@ export function PriceBreakdown({ formData }: PriceBreakdownProps) {
   const car = carModels.find((model) => model.id === formData.carModel)
   const days = calculateDays(formData.startDate, formData.endDate)
 
-  console.log(formData)
-
   return (
     <div className="space-y-2">
       <h3 className="font-medium">Price Breakdown</h3>

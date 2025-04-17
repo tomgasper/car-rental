@@ -20,3 +20,4 @@ export const isInitialFormValid = (formData: ReservationFormData): boolean => {
 export const isPersonalInfoValid = (formData: ReservationFormData): boolean => {
   return !!(formData.firstName && formData.lastName && formData.email && formData.phoneNumber)
 }
+

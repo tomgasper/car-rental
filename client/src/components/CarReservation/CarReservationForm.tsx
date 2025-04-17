@@ -37,6 +37,7 @@ export default function ReservationForm() {
       if (stepParam) {
         const parsedStep = Number.parseInt(stepParam, 10)
         if (!isNaN(parsedStep) && parsedStep >= 0 && parsedStep <= 2) {
+          
           setStep(parsedStep)
           return
         }
