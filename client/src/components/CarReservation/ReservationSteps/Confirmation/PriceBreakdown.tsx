@@ -1,15 +1,18 @@
 import { Separator } from "@/components/ui/separator"
+import { useCarRentalData } from "@/hooks/useCarRentalData"
 import type { ReservationFormData } from "@/lib/types"
-import { calculateDays, getSelectedCar } from "@/lib/utils/reservation"
+import { calculateDays } from "@/lib/utils/reservation"
 
 interface PriceBreakdownProps {
   formData: ReservationFormData
 }
 
 export function PriceBreakdown({ formData }: PriceBreakdownProps) {
-  const car = getSelectedCar(formData.carModel)
+  const { carModels } = useCarRentalData()
+  const car = carModels.find((model) => model.id === formData.carModel)
   const days = calculateDays(formData.startDate, formData.endDate)
-  const totalPrice = car ? car.pricePerDay * days : 0
+
+  console.log(formData)
 
   return (
     <div className="space-y-2">
@@ -17,9 +20,9 @@ export function PriceBreakdown({ formData }: PriceBreakdownProps) {
       <div className="space-y-1 text-sm">
         <div className="flex justify-between">
           <span>
-            {car?.name} (€{car?.pricePerDay} x {days} days)
+            {car?.name} (€{(formData.totalPrice / days).toFixed(2)} x {days} days)
           </span>
-          <span>€{car?.pricePerDay ? car.pricePerDay * days : 0}</span>
+          <span>€{formData.totalPrice}</span>
         </div>
         <div className="flex justify-between">
           <span>Insurance</span>
@@ -32,7 +35,7 @@ export function PriceBreakdown({ formData }: PriceBreakdownProps) {
         <Separator className="my-2" />
         <div className="flex justify-between font-semibold">
           <span>Total</span>
-          <span>€{totalPrice}</span>
+          <span>€{formData.totalPrice}</span>
         </div>
       </div>
     </div>

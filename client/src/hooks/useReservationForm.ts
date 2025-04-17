@@ -42,6 +42,8 @@ export function useReservationForm(): UseReservationFormReturn {
     lastName: "",
     email: "",
     phoneNumber: "",
+    totalPrice: 0,
+    reservationStatus: "",
   })
   const [reservationId, setReservationId] = useState("")
   const [isLoading, setIsLoading] = useState(false)
@@ -73,13 +75,18 @@ export function useReservationForm(): UseReservationFormReturn {
         setIsLoading(false)
         return
       }
+      console.log(availability)
+      setFormData(prev => ({
+        ...prev,
+        totalPrice: availability[0].totalPrice,
+      }))
       updateStep(STEPS.AVAILABILITY_CONFIRMATION)
     } catch (error) {
-        if (error instanceof ApiError) {
-            setError(getErrorMessages(error.details) || "Failed to check availability");
-        } else {
-            setError("Failed to check availability");
-        }
+      if (error instanceof ApiError) {
+        setError(getErrorMessages(error.details) || "Failed to check availability");
+      } else {
+        setError("Failed to check availability");
+      }
     } finally {
       setIsLoading(false)
     }
@@ -91,6 +98,11 @@ export function useReservationForm(): UseReservationFormReturn {
     try {
       const reservation = await ReservationService.createReservation(formData)
       setReservationId(reservation.reservationId)
+      setFormData(prev => ({
+        ...prev,
+        totalPrice: reservation.totalPrice,
+        reservationStatus: reservation.reservationStatus
+      }))
       updateStep(STEPS.RESERVATION_COMPLETE)
     } catch (error) {
       if (error instanceof ApiError) {
@@ -118,6 +130,8 @@ export function useReservationForm(): UseReservationFormReturn {
       lastName: "",
       email: "",
       phoneNumber: "",
+      totalPrice: 0,
+      reservationStatus: "",
     })
     updateStep(STEPS.RESERVATION_FORM)
   }

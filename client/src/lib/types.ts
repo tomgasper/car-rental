@@ -22,6 +22,8 @@ export interface Location {
     lastName: string
     email: string
     phoneNumber: string
+    totalPrice: number
+    reservationStatus: string
   }
   
   export interface ReservationSummary {

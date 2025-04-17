@@ -3,8 +3,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import type { ReservationFormData } from "@/lib/types"
 import { format } from "date-fns"
 import { Car, CalendarIcon, Check, MapPin } from "lucide-react"
-import { getSelectedCar } from "@/lib/utils/reservation"
-import { LOCATIONS } from "@/constants/reservation"
+import { useCarRentalData } from "@/hooks/useCarRentalData"
 
 interface CompleteProps {
   formData: ReservationFormData
@@ -13,9 +12,10 @@ interface CompleteProps {
 }
 
 export function Complete({ formData, reservationId, onReset }: CompleteProps) {
-  const car = getSelectedCar(formData.carModel)
-  const pickupLocationName = LOCATIONS.find((loc) => loc.id === formData.pickupLocation)?.name
-  const returnLocationName = LOCATIONS.find((loc) => loc.id === formData.returnLocation)?.name
+  const { carModels, locations } = useCarRentalData()
+  const car = carModels.find((model) => model.id === formData.carModel)
+  const pickupLocationName = locations.find((loc) => loc.id === formData.pickupLocation)?.name
+  const returnLocationName = locations.find((loc) => loc.id === formData.returnLocation)?.name
 
   return (
     <Card>
