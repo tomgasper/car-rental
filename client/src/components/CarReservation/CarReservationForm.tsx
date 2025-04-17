@@ -71,13 +71,44 @@ export default function ReservationForm() {
     }))
   }
 
-  const handleCheckAvailability = () => {
+  const fetchCarAvailability = async () => {
+    const queryParams = new URLSearchParams({
+      startDate: formData.startDate?.toISOString() || "",
+      endDate: formData.endDate?.toISOString() || "",
+      carModel: formData.carModel || "",
+      pickupLocation: formData.pickupLocation || "",
+      returnLocation: formData.returnLocation || "",
+    });
+
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/cars?${queryParams.toString()}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    const data = await response.json();
+    console.log(data);
+    if (data.status != 200) {
+      if (data.errors && data.errors.length > 0) {
+        throw new Error(data.errors[0]);
+      } else {
+        throw new Error(data.title);
+      }
+    }
+    return data
+  }
+
+  const handleCheckAvailability = async() => {
     setIsLoading(true)
-    // Simulate API call
-    setTimeout(() => {
-      setIsLoading(false)
+    try {
+      const availability = await fetchCarAvailability()
+      console.log(availability)
       updateStep(STEPS.AVAILABILITY_CONFIRMATION)
-    }, 1000)
+    } catch (error) {
+      console.error("Error fetching car availability. ", error)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   const handleBack = () => {
