@@ -4,6 +4,7 @@ using CarRental.src.Models;
 using CarRental.src.Repositories.Interfaces;
 using CarRental.src.Services.Interfaces;
 using FluentResults;
+using FluentValidation;
 
 public sealed class ReservationService : IReservationService
 {
@@ -12,18 +13,35 @@ public sealed class ReservationService : IReservationService
     private readonly IReservationRepository _reservationRepository;
     private readonly ILocationRepository _locationRepository;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IValidator<ReservationRequest> _validator;
 
-    public ReservationService(IPricingService pricingService, ICarRepository carRepository, IReservationRepository reservationRepository, ILocationRepository locationRepository, IUnitOfWork unitOfWork)
+    public ReservationService(
+        IPricingService pricingService,
+        ICarRepository carRepository,
+        IReservationRepository reservationRepository,
+        ILocationRepository locationRepository,
+        IUnitOfWork unitOfWork,
+        IValidator<ReservationRequest> validator)
     {
         _pricingService = pricingService;
         _carRepository = carRepository;
         _reservationRepository = reservationRepository;
         _locationRepository = locationRepository;
         _unitOfWork = unitOfWork;
+        _validator = validator;
     }
 
     public async Task<Result<ReservationResponse>> ReserveCar(ReservationRequest request)
     {
+        // Validate request
+        var validationResult = await _validator.ValidateAsync(request);
+        if (!validationResult.IsValid)
+        {
+            return Result.Fail<ReservationResponse>(
+                validationResult.Errors.Select(e => new ValidationError(e.ErrorMessage, e.PropertyName))
+            );
+        }
+
         var availableCar = await GetFirstAvailableCar(request.CarModel, request.StartDate, request.EndDate);
 
         if (availableCar.IsFailed){
